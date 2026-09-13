@@ -1,0 +1,72 @@
+import SwiftUI
+
+/// Layer order (bottom → top): SpriteKit scene, deck or run UI, full-screen pages, ads, rewards, share card, toast.
+/// The bottom bar is rendered once here, as a safe-area inset under the deck and the tab-root pages, so switching
+/// tabs only swaps the page content.
+struct RootView: View {
+    @Environment(GameCoordinator.self) private var coordinator
+
+    var body: some View {
+        let run = coordinator.run
+        let router = coordinator.router
+        let showsNav = !run.isInRun && (router.sheet?.isTabRoot ?? true)
+        ZStack {
+            ZStack {
+                GameSceneView()
+
+                if run.isInRun {
+                    RunView()
+                        .transition(.opacity)
+                } else {
+                    DeckView()
+                        .transition(.opacity.combined(with: .offset(y: 18)))
+                }
+
+                if let sheet = router.sheet, !run.isInRun {
+                    SheetHost(kind: sheet)
+                        .zIndex(10)
+                }
+            }
+            .safeAreaInset(edge: .bottom, spacing: 0) {
+                if showsNav {
+                    BottomNav(active: router.tab)
+                        .transition(.move(edge: .bottom).combined(with: .opacity))
+                }
+            }
+            .animation(.easeOut(duration: 0.22), value: showsNav)
+
+            if let ad = router.ad {
+                MockAdView(request: ad)
+                    .zIndex(20)
+                    .transition(.opacity)
+            }
+            if let reward = router.reward {
+                RewardPopupView(popup: reward)
+                    .id(reward.id)
+                    .zIndex(30)
+                    .transition(.opacity)
+            }
+            if let image = router.shareImage {
+                ShareCardOverlay(image: image)
+                    .zIndex(35)
+                    .transition(.opacity)
+            }
+            if let toast = router.toast {
+                ToastView(message: toast)
+                    .zIndex(40)
+            }
+        }
+        .background(Theme.bg)
+        .animation(.easeInOut(duration: 0.3), value: run.isInRun)
+        .animation(.easeOut(duration: 0.24), value: router.sheet)
+        .animation(.easeOut(duration: 0.25), value: router.reward?.id)
+        .animation(.easeOut(duration: 0.25), value: router.ad?.id)
+        .animation(.easeOut(duration: 0.22), value: router.toast)
+        .animation(.easeOut(duration: 0.25), value: router.shareImage == nil)
+        .onAppear { coordinator.appDidBecomeActive() }
+    }
+}
+
+#Preview {
+    RootView().environment(AppEnvironment.preview().coordinator)
+}

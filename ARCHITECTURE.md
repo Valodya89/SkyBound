@@ -1,10 +1,10 @@
 # Architecture
 
-SkyBound is split into a **platform-neutral core** and a **thin native shell**. The core owns every rule of
+Starlane is split into a **platform-neutral core** and a **thin native shell**. The core owns every rule of
 the game and the economy; the shell owns rendering, input, persistence wiring and presentation.
 
 ```
-┌──────────────────────────────── SkyBound (app) ────────────────────────────────┐
+┌──────────────────────────────── Starlane (app) ────────────────────────────────┐
 │ SwiftUI views ──▶ GameCoordinator (intents) ──▶ PlayerStore / RunController     │
 │      ▲                        │                       │            │           │
 │      │ @Observable state      │ ads, purchases        │ profile    │ simulation │
@@ -12,12 +12,12 @@ the game and the economy; the shell owns rendering, input, persistence wiring an
 │  rewards, ads)         Services (protocols)      ProfileStore   RunScene (SK)  │
 └────────────────────────────────────────────────────────────────────────────────┘
                                    │ imports
-┌──────────────────────────── SkyBoundCore (SwiftPM) ────────────────────────────┐
+┌──────────────────────────── StarlaneCore (SwiftPM) ────────────────────────────┐
 │ Models · Engine (RunSimulation, Projector, RNG) · Economy systems · Persistence │
 └────────────────────────────────────────────────────────────────────────────────┘
 ```
 
-## SkyBoundCore
+## StarlaneCore
 
 Pure Swift, no UIKit, value types everywhere.
 
@@ -29,8 +29,8 @@ Pure Swift, no UIKit, value types everywhere.
 Fairness rules baked into the simulation (each one was found with the bot in `PlayabilityTests`): leaving a lane is instant but you only collide with the lane you have physically reached (`laneEntryFraction`); any airborne frame clears a hurdle; a jump or slide requested while airborne is queued and fires on landing; on-track ▲/▼ hints are timed to the current speed (`hintDepth`); warm-up patterns never ask for more than one swipe at a time; authored patterns are stretched with speed (`spacingStretch`) so consecutive obstacle rows are always ~0.6–0.8 s apart regardless of how fast the world moves.
 
 Pacing is tuned for relaxed, minutes-long runs: cruising speed is 62% of the prototype's (`cruiseScale`), the opening ramp takes two minutes, speed is capped at 1.6× base, difficulty unfolds over 9 km, and boss lasers move at world speed with a long telegraph. `PlayabilityTests` prints a survival report per reaction time; the enforced bar is that a 500 ms-reaction bot lasts ≥ 90 s in most seeds and ≥ 2 minutes on average. It returns `[RunEvent]` per step; callers turn events into sound, haptics and particles. Seeded runs are bit-for-bit reproducible (Daily Challenge). |
-| Economy | `Progression`, `EnergySystem`, `GachaSystem`, `SeasonPass`, `DuelSystem`, `DailySystem`, `ShopSystem`, `UpgradeSystem`, `RunResolver` | Stateless enums operating on `inout PlayerProfile`. `RunResolver.bank` applies a `RunSummary` (bests, ghosts, XP, pass, missions, achievements, duels). |
-| Persistence | `ProfileStore` protocol, `FileProfileStore` (atomic JSON in Application Support), `InMemoryProfileStore` | Swappable for CloudKit/Keychain later. |
+| Economy | `Progression`, `EnergySystem`, `GachaSystem`, `SeasonPass`, `DuelSystem`, `DailySystem`, `ShopSystem`, `UpgradeSystem`, `RunResolver` | Stateless enums operating on `inout PlayerProfile`. `RunResolver.bank` applies a `RunSummary` (bests, ghosts, XP, pass, missions, achievements, duels); a run that ends, is revived and ends again is banked as a delta against the summary already credited, so nothing is paid twice. |
+| Persistence | `ProfileStore` protocol, `FileProfileStore` (atomic JSON in Application Support), `InMemoryProfileStore` | `PlayerProfile` decodes tolerantly (missing keys fall back to defaults) and a file that fails to decode is moved aside as `profile.corrupt-<time>.json` rather than overwritten. Swappable for CloudKit/Keychain later. |
 | Support | `Clock`, `ManualClock`, `DaySeed`, `GameFormat` | Injected time keeps daily resets testable. |
 
 ## App layer
@@ -67,7 +67,7 @@ it. `UIRouter.SheetKind` still names eleven destinations, but several share a pa
 section they open on: crates/upgrades → Hangar (Rockets · Workshop · Archive crates), login/wheel/dailyChallenge
 → Daily, rank/duels → Ranks (Weekly · Duels · Badges).
 
-The design system ("Flight deck", `SkyBound/Design`) uses one warm signal colour (flare) for anything the player
+The design system ("Flight deck", `Starlane/Design`) uses one warm signal colour (flare) for anything the player
 can act on, one cold data colour (ice) for gems and information, and gold only as the coin mark and premium.
 Type is Big Shoulders Display for every number and title and Instrument Sans for copy; both ship as variable
 fonts in `Resources/Fonts` and are resolved through CoreText variation axes (`GameFont`). Motifs instead of
@@ -77,10 +77,10 @@ weight plus drawn currency marks and a vector `RocketMark`.
 
 ## Testing
 
-- `SkyBoundCoreTests` (Swift Testing, runs with `swift test`): simulation determinism, collisions, shields,
+- `StarlaneCoreTests` (Swift Testing, runs with `swift test`): simulation determinism, collisions, shields,
   timers, revive, attract safety, projection, RNG, progression, energy, gacha pity and guarantees, season
   pass claims, duels, daily rollover/streaks, shop grants, run banking, persistence round-trip.
-- `SkyBoundTests`: `RunController` state machine (countdown → crash → results → revive, pause/quit),
+- `StarlaneTests`: `RunController` state machine (countdown → crash → results → revive, pause/quit),
   `GameCoordinator` flows (launch gating, boosts, pulls, login, reward queue, rewarded ads, purchases,
   settings, reset) and `PlayerStore` (ticks, offline regen, persistence, leaderboard).
 

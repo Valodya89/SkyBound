@@ -20,7 +20,7 @@ playground.xcworkspace
 Packages/*/.build/
 
 # Keep the generated project committed so the repo opens directly in Xcode.
-!SkyBound.xcodeproj
+!Starlane.xcodeproj
 
 # Carthage
 Carthage/Build/

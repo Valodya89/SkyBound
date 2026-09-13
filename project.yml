@@ -1,4 +1,4 @@
-name: SkyBound
+name: Starlane
 options:
   bundleIdPrefix: com.ravosolutions
   deploymentTarget:
@@ -10,8 +10,8 @@ options:
   defaultConfig: Debug
 
 packages:
-  SkyBoundCore:
-    path: Packages/SkyBoundCore
+  StarlaneCore:
+    path: Packages/StarlaneCore
 
 settings:
   base:
@@ -31,19 +31,19 @@ settings:
     STRING_CATALOG_GENERATE_SYMBOLS: NO
 
 targets:
-  SkyBound:
+  Starlane:
     type: application
     platform: iOS
     sources:
-      - path: SkyBound
+      - path: Starlane
         excludes:
           - "Info.plist"
     dependencies:
-      - package: SkyBoundCore
+      - package: StarlaneCore
     info:
-      path: SkyBound/Info.plist
+      path: Starlane/Info.plist
       properties:
-        CFBundleDisplayName: SkyBound
+        CFBundleDisplayName: Starlane
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         UILaunchScreen:
@@ -62,8 +62,8 @@ targets:
         UIApplicationSupportsIndirectInputEvents: true
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.ravosolutions.skybound
-        PRODUCT_NAME: SkyBound
+        PRODUCT_BUNDLE_IDENTIFIER: com.ravosolutions.starlane
+        PRODUCT_NAME: Starlane
         MARKETING_VERSION: 1.0.0
         CURRENT_PROJECT_VERSION: 1
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
@@ -72,33 +72,33 @@ targets:
         SUPPORTS_MACCATALYST: NO
         INFOPLIST_KEY_LSApplicationCategoryType: public.app-category.games
 
-  SkyBoundTests:
+  StarlaneTests:
     type: bundle.unit-test
     platform: iOS
     sources:
-      - SkyBoundTests
+      - StarlaneTests
     dependencies:
-      - target: SkyBound
-      - package: SkyBoundCore
+      - target: Starlane
+      - package: StarlaneCore
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.ravosolutions.skybound.tests
+        PRODUCT_BUNDLE_IDENTIFIER: com.ravosolutions.starlane.tests
         GENERATE_INFOPLIST_FILE: YES
 
 schemes:
-  SkyBound:
+  Starlane:
     build:
       targets:
-        SkyBound: all
-        SkyBoundTests: [test]
+        Starlane: all
+        StarlaneTests: [test]
     run:
       config: Debug
     test:
       config: Debug
       gatherCoverageData: true
       targets:
-        - SkyBoundTests
-        - package: SkyBoundCore/SkyBoundCoreTests
+        - StarlaneTests
+        - package: StarlaneCore/StarlaneCoreTests
     profile:
       config: Release
     analyze:

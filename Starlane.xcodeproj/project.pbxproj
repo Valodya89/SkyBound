@@ -1,0 +1,851 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		09F0CCC2276CBC55F5406D95 /* BigShouldersDisplay.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 30CB2BED3BEC05D2C6F1F0F9 /* BigShouldersDisplay.ttf */; };
+		0C625712BB4926F034C6D6FC /* AppLayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96FF7AB385BBDB98DA22103A /* AppLayerTests.swift */; };
+		0DB66273572CB6A527147D20 /* DailyScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA70A8C2E7770AABDE20385 /* DailyScreen.swift */; };
+		120AB052C0E4EE760FD99DAF /* ShopScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B7439EEA65448C5B0FB4B3F /* ShopScreen.swift */; };
+		1582205F9AAF41C4749617F1 /* OFL-InstrumentSans.txt in Resources */ = {isa = PBXBuildFile; fileRef = 0397AB8B8A12806163B838BF /* OFL-InstrumentSans.txt */; };
+		15A3B1DB8A9B1E07422C3942 /* StarlaneCore in Frameworks */ = {isa = PBXBuildFile; productRef = DBE69FF51FB81BB876BF515E /* StarlaneCore */; };
+		1EE0227E131FA85BF6D427FE /* AdService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D12A120CB58BCFDBCBA6AB /* AdService.swift */; };
+		2490E8E29D8687EFE7C6B499 /* StarlaneCore in Frameworks */ = {isa = PBXBuildFile; productRef = A3C7AB5B306256743EFF6364 /* StarlaneCore */; };
+		25CB3609FB1574CCBF9EF925 /* GameSceneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D084C2695ACA3866FA7F27FA /* GameSceneView.swift */; };
+		27A10CD8C8C8BC59A8EC4750 /* ResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EE8558182BEC80886DA8F9 /* ResultsView.swift */; };
+		302B06CDE42E2020619A4B74 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A0F122F57EB295AA55F141 /* Theme.swift */; };
+		323126C4A90D3E218513A0F2 /* SheetHost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7352831361C56CB32687DEFB /* SheetHost.swift */; };
+		3AB2B5A20CDA1FC1663CBB21 /* DeckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93803B1DE230817B6F970204 /* DeckView.swift */; };
+		3EE714C1DFA5DF63EB20E5A4 /* SynthEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF6753769DD8C3D5F924752 /* SynthEngine.swift */; };
+		3EF030EF8CA7FA5AEBD97FE9 /* InstrumentSans.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B186F16EE330BC0C3E2B77D1 /* InstrumentSans.ttf */; };
+		517259ABBFE125427D6DE436 /* BossNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C1C1CEE7F24C5B3EC12ACE /* BossNode.swift */; };
+		62CE48EB2F0F6BAF83903B8A /* RunController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF997EAE608F7C2B8B81146 /* RunController.swift */; };
+		64F873EC0C25589683A8B255 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 12FB11EC42D0922CA40AB874 /* Assets.xcassets */; };
+		6759118200562E339B6A7E38 /* OFL-BigShouldersDisplay.txt in Resources */ = {isa = PBXBuildFile; fileRef = 14F121F4DA322D452BD21600 /* OFL-BigShouldersDisplay.txt */; };
+		6A263467751E501A5258519A /* Icons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB9E95129A7EB4CC1EB4759 /* Icons.swift */; };
+		6BB821CA36CCFD495844B242 /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF9C9180CBD17A42A06A7ACE /* Buttons.swift */; };
+		726610E4253E229F706AFB5F /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13994C374938FB83856B39F5 /* ToastView.swift */; };
+		843E8D0E0D496D72969D4B35 /* HapticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D18D0E2D8CFC691F08DCEB /* HapticsService.swift */; };
+		8877B612710C033AC2C388C2 /* PurchaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9F879AD89B31041AA04F4B /* PurchaseService.swift */; };
+		888787CD52226F70CE8EF6AC /* ShareCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2796C0F8E6B329F623FCE0E8 /* ShareCardView.swift */; };
+		8DB1BDF76965C0554BCAA9D7 /* EntityNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17E4D229099AC957E5309DD /* EntityNode.swift */; };
+		8F6670B2A8A076695EC57281 /* RunView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2679DD35FA0E6E9A1DEFD3CB /* RunView.swift */; };
+		9A2BB2FAE6398A66604BA18E /* StarlaneApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8577FC884C4E6D00BF84BAE /* StarlaneApp.swift */; };
+		B19E9D2AAAB2ACE4CE2BD203 /* RewardPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455FD941B2850EC5826E326F /* RewardPopupView.swift */; };
+		B39C059E924F27F4B3AB4202 /* RewardStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7697E142ABD02CC5DD7AED1 /* RewardStyle.swift */; };
+		B409A54DFDFD9ED30C599EF8 /* Chrome.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8BCAD92007818AADCD7AB0E /* Chrome.swift */; };
+		B89FAE091E8AB7F10A5A04FC /* GameCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ADDD03A7E0A2F23E0C81334 /* GameCoordinator.swift */; };
+		B8E9EF7ED1B5EAFE5E5B8EF1 /* AudioService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9086AD774530F1A65D99E259 /* AudioService.swift */; };
+		BC7403A1AA82B4AE7F36290B /* SceneSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0049B3A03C109C0768D61EDB /* SceneSupport.swift */; };
+		C7751B93E310BBCF88AD221C /* HangarScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D3FBCF379B1183039BAA394 /* HangarScreen.swift */; };
+		C9C63050D62111CF98E9AD47 /* EffectsLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CFF442D8F8E8E048704F19C /* EffectsLayer.swift */; };
+		D28080BDEA614CD1430C77F9 /* PlayerStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B3117783774853F5B61B05 /* PlayerStore.swift */; };
+		D5158AB683448D9295BBD415 /* BackdropNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AAC6605481D5F9340C82A3 /* BackdropNode.swift */; };
+		E0849639D2F00127A70A6324 /* Panels.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48F1DD965E47B93C5134098 /* Panels.swift */; };
+		E0EE71560D175CD9C62D4DA3 /* UIRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6273001C3F605A78B9348517 /* UIRouter.swift */; };
+		E79B4FC773A8D9CBF4FAA7BA /* ShipNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41D1D719FDF16BE362DC6A61 /* ShipNode.swift */; };
+		E815724863CDB393492E50F6 /* RanksScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 061BB612FC3A53377C03A055 /* RanksScreen.swift */; };
+		E84AB06EE9812301F5639A14 /* SettingsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C79B7239196F8BDFE3BE4B9 /* SettingsScreen.swift */; };
+		EBD7317E287D551578E9166C /* MockAdView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EAA230F5EBD42802F0BA57B /* MockAdView.swift */; };
+		EE4F93F7069C2BD39973E761 /* ModesScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB43437032A322656E73BEB /* ModesScreen.swift */; };
+		EFD358D01AC061EF1DD495AB /* AppEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C8D157279F7D4915FCF0E9 /* AppEnvironment.swift */; };
+		F0FBC95E1AE7DE4B8A297385 /* RunScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D330ED40058FCE6CD9E26D /* RunScene.swift */; };
+		F935832D1FE9CF128E0D8382 /* SeasonScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636EB17AA363EBB84806E38B /* SeasonScreen.swift */; };
+		FC9EBBB5D8FD67D5D3747EDC /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C5C64E7D175A02D74CD7FA /* RootView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		3CBBCED4120F313058A01D22 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DF3ED8C12AE2DBC251269194 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 854F178211381933799E9E0C;
+			remoteInfo = Starlane;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0049B3A03C109C0768D61EDB /* SceneSupport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneSupport.swift; sourceTree = "<group>"; };
+		00C8D157279F7D4915FCF0E9 /* AppEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEnvironment.swift; sourceTree = "<group>"; };
+		0397AB8B8A12806163B838BF /* OFL-InstrumentSans.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "OFL-InstrumentSans.txt"; sourceTree = "<group>"; };
+		04B3117783774853F5B61B05 /* PlayerStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerStore.swift; sourceTree = "<group>"; };
+		061BB612FC3A53377C03A055 /* RanksScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RanksScreen.swift; sourceTree = "<group>"; };
+		0EAA230F5EBD42802F0BA57B /* MockAdView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAdView.swift; sourceTree = "<group>"; };
+		12FB11EC42D0922CA40AB874 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		13994C374938FB83856B39F5 /* ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
+		14F121F4DA322D452BD21600 /* OFL-BigShouldersDisplay.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "OFL-BigShouldersDisplay.txt"; sourceTree = "<group>"; };
+		1ADDD03A7E0A2F23E0C81334 /* GameCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameCoordinator.swift; sourceTree = "<group>"; };
+		23EE8558182BEC80886DA8F9 /* ResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsView.swift; sourceTree = "<group>"; };
+		2679DD35FA0E6E9A1DEFD3CB /* RunView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunView.swift; sourceTree = "<group>"; };
+		2796C0F8E6B329F623FCE0E8 /* ShareCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareCardView.swift; sourceTree = "<group>"; };
+		30CB2BED3BEC05D2C6F1F0F9 /* BigShouldersDisplay.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BigShouldersDisplay.ttf; sourceTree = "<group>"; };
+		34E17FE3C471B10476C7FF27 /* Starlane.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Starlane.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		38C5C64E7D175A02D74CD7FA /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		3B7439EEA65448C5B0FB4B3F /* ShopScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopScreen.swift; sourceTree = "<group>"; };
+		3DF997EAE608F7C2B8B81146 /* RunController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunController.swift; sourceTree = "<group>"; };
+		41D1D719FDF16BE362DC6A61 /* ShipNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShipNode.swift; sourceTree = "<group>"; };
+		44A0F122F57EB295AA55F141 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		455FD941B2850EC5826E326F /* RewardPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardPopupView.swift; sourceTree = "<group>"; };
+		49C1C1CEE7F24C5B3EC12ACE /* BossNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BossNode.swift; sourceTree = "<group>"; };
+		4CB9E95129A7EB4CC1EB4759 /* Icons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icons.swift; sourceTree = "<group>"; };
+		4D9F879AD89B31041AA04F4B /* PurchaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseService.swift; sourceTree = "<group>"; };
+		4F2E83244BB3B988CDDE7665 /* StarlaneTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = StarlaneTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5D3FBCF379B1183039BAA394 /* HangarScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HangarScreen.swift; sourceTree = "<group>"; };
+		6273001C3F605A78B9348517 /* UIRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIRouter.swift; sourceTree = "<group>"; };
+		636EB17AA363EBB84806E38B /* SeasonScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeasonScreen.swift; sourceTree = "<group>"; };
+		7352831361C56CB32687DEFB /* SheetHost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetHost.swift; sourceTree = "<group>"; };
+		7ABFC9E071031BDBA54D7F2A /* StarlaneCore */ = {isa = PBXFileReference; lastKnownFileType = folder; name = StarlaneCore; path = Packages/StarlaneCore; sourceTree = SOURCE_ROOT; };
+		7CFF442D8F8E8E048704F19C /* EffectsLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EffectsLayer.swift; sourceTree = "<group>"; };
+		8C79B7239196F8BDFE3BE4B9 /* SettingsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsScreen.swift; sourceTree = "<group>"; };
+		9086AD774530F1A65D99E259 /* AudioService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioService.swift; sourceTree = "<group>"; };
+		93803B1DE230817B6F970204 /* DeckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckView.swift; sourceTree = "<group>"; };
+		93D330ED40058FCE6CD9E26D /* RunScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunScene.swift; sourceTree = "<group>"; };
+		96FF7AB385BBDB98DA22103A /* AppLayerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLayerTests.swift; sourceTree = "<group>"; };
+		9DA70A8C2E7770AABDE20385 /* DailyScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyScreen.swift; sourceTree = "<group>"; };
+		A7697E142ABD02CC5DD7AED1 /* RewardStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardStyle.swift; sourceTree = "<group>"; };
+		B186F16EE330BC0C3E2B77D1 /* InstrumentSans.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = InstrumentSans.ttf; sourceTree = "<group>"; };
+		B48F1DD965E47B93C5134098 /* Panels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Panels.swift; sourceTree = "<group>"; };
+		B5AAC6605481D5F9340C82A3 /* BackdropNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackdropNode.swift; sourceTree = "<group>"; };
+		B8D12A120CB58BCFDBCBA6AB /* AdService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdService.swift; sourceTree = "<group>"; };
+		BBF6753769DD8C3D5F924752 /* SynthEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SynthEngine.swift; sourceTree = "<group>"; };
+		D084C2695ACA3866FA7F27FA /* GameSceneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSceneView.swift; sourceTree = "<group>"; };
+		D17E4D229099AC957E5309DD /* EntityNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityNode.swift; sourceTree = "<group>"; };
+		D8577FC884C4E6D00BF84BAE /* StarlaneApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarlaneApp.swift; sourceTree = "<group>"; };
+		DF9C9180CBD17A42A06A7ACE /* Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
+		EDB43437032A322656E73BEB /* ModesScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModesScreen.swift; sourceTree = "<group>"; };
+		F8BCAD92007818AADCD7AB0E /* Chrome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chrome.swift; sourceTree = "<group>"; };
+		F8D18D0E2D8CFC691F08DCEB /* HapticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticsService.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		62D549358A3D53E263FF2960 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				15A3B1DB8A9B1E07422C3942 /* StarlaneCore in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9B5D65C6075CC54BC03D473D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2490E8E29D8687EFE7C6B499 /* StarlaneCore in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		00CB734EC45E7DAB2E18FEED /* Pass */ = {
+			isa = PBXGroup;
+			children = (
+				636EB17AA363EBB84806E38B /* SeasonScreen.swift */,
+			);
+			path = Pass;
+			sourceTree = "<group>";
+		};
+		03FBB4999C16960EEC09898D = {
+			isa = PBXGroup;
+			children = (
+				4C619C0B6D74B1D7E4D2AB14 /* Packages */,
+				E28EC287DD9814E6F46AB5B7 /* Starlane */,
+				A50238A150E1608824F81B89 /* StarlaneTests */,
+				519BBFE3711B36FDFA78CDED /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		173F86487445249A894971C2 /* Results */ = {
+			isa = PBXGroup;
+			children = (
+				23EE8558182BEC80886DA8F9 /* ResultsView.swift */,
+				2796C0F8E6B329F623FCE0E8 /* ShareCardView.swift */,
+			);
+			path = Results;
+			sourceTree = "<group>";
+		};
+		2129174C3CAC50E445369D20 /* Nodes */ = {
+			isa = PBXGroup;
+			children = (
+				B5AAC6605481D5F9340C82A3 /* BackdropNode.swift */,
+				49C1C1CEE7F24C5B3EC12ACE /* BossNode.swift */,
+				7CFF442D8F8E8E048704F19C /* EffectsLayer.swift */,
+				D17E4D229099AC957E5309DD /* EntityNode.swift */,
+				41D1D719FDF16BE362DC6A61 /* ShipNode.swift */,
+			);
+			path = Nodes;
+			sourceTree = "<group>";
+		};
+		26D6515C261DD19B63DEADE2 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				30CB2BED3BEC05D2C6F1F0F9 /* BigShouldersDisplay.ttf */,
+				B186F16EE330BC0C3E2B77D1 /* InstrumentSans.ttf */,
+				14F121F4DA322D452BD21600 /* OFL-BigShouldersDisplay.txt */,
+				0397AB8B8A12806163B838BF /* OFL-InstrumentSans.txt */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		301773F3ED7733C7A4996B44 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				B8D12A120CB58BCFDBCBA6AB /* AdService.swift */,
+				9086AD774530F1A65D99E259 /* AudioService.swift */,
+				F8D18D0E2D8CFC691F08DCEB /* HapticsService.swift */,
+				4D9F879AD89B31041AA04F4B /* PurchaseService.swift */,
+				BBF6753769DD8C3D5F924752 /* SynthEngine.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		4542A66C3DA02241A165767B /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				8C79B7239196F8BDFE3BE4B9 /* SettingsScreen.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		4982A4752D449BD98778C1FC /* Design */ = {
+			isa = PBXGroup;
+			children = (
+				79895EFE05425AB38DB2DA17 /* Components */,
+				44A0F122F57EB295AA55F141 /* Theme.swift */,
+			);
+			path = Design;
+			sourceTree = "<group>";
+		};
+		4C619C0B6D74B1D7E4D2AB14 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				7ABFC9E071031BDBA54D7F2A /* StarlaneCore */,
+			);
+			path = Packages;
+			sourceTree = "<group>";
+		};
+		519BBFE3711B36FDFA78CDED /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				34E17FE3C471B10476C7FF27 /* Starlane.app */,
+				4F2E83244BB3B988CDDE7665 /* StarlaneTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		559D4ABCF54A4124013BD00A /* Hub */ = {
+			isa = PBXGroup;
+			children = (
+				93803B1DE230817B6F970204 /* DeckView.swift */,
+				7352831361C56CB32687DEFB /* SheetHost.swift */,
+			);
+			path = Hub;
+			sourceTree = "<group>";
+		};
+		5DF168E7E0E47410E0330D54 /* Rank */ = {
+			isa = PBXGroup;
+			children = (
+				061BB612FC3A53377C03A055 /* RanksScreen.swift */,
+			);
+			path = Rank;
+			sourceTree = "<group>";
+		};
+		62840051308F384A205A1ADE /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				DCFA15F21768AD7D11E0D2C5 /* Daily */,
+				92A669B2B06D9D9A420FC6ED /* Hangar */,
+				559D4ABCF54A4124013BD00A /* Hub */,
+				6CA06704794776EBB77E31E2 /* Modes */,
+				D943F73C51B09DDAB6C9FCDD /* Overlays */,
+				00CB734EC45E7DAB2E18FEED /* Pass */,
+				5DF168E7E0E47410E0330D54 /* Rank */,
+				173F86487445249A894971C2 /* Results */,
+				B4B48ACEBAA38DCF12EC0A17 /* Run */,
+				4542A66C3DA02241A165767B /* Settings */,
+				F8EDBCC8C0AB52BCD3509675 /* Shop */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		6CA06704794776EBB77E31E2 /* Modes */ = {
+			isa = PBXGroup;
+			children = (
+				EDB43437032A322656E73BEB /* ModesScreen.swift */,
+			);
+			path = Modes;
+			sourceTree = "<group>";
+		};
+		79895EFE05425AB38DB2DA17 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				DF9C9180CBD17A42A06A7ACE /* Buttons.swift */,
+				F8BCAD92007818AADCD7AB0E /* Chrome.swift */,
+				4CB9E95129A7EB4CC1EB4759 /* Icons.swift */,
+				B48F1DD965E47B93C5134098 /* Panels.swift */,
+				A7697E142ABD02CC5DD7AED1 /* RewardStyle.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		92A669B2B06D9D9A420FC6ED /* Hangar */ = {
+			isa = PBXGroup;
+			children = (
+				5D3FBCF379B1183039BAA394 /* HangarScreen.swift */,
+			);
+			path = Hangar;
+			sourceTree = "<group>";
+		};
+		A50238A150E1608824F81B89 /* StarlaneTests */ = {
+			isa = PBXGroup;
+			children = (
+				96FF7AB385BBDB98DA22103A /* AppLayerTests.swift */,
+			);
+			path = StarlaneTests;
+			sourceTree = "<group>";
+		};
+		A52E482094C64A0AE5D4A918 /* Resources 2 */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Resources 2";
+			sourceTree = "<group>";
+		};
+		B4B48ACEBAA38DCF12EC0A17 /* Run */ = {
+			isa = PBXGroup;
+			children = (
+				2679DD35FA0E6E9A1DEFD3CB /* RunView.swift */,
+			);
+			path = Run;
+			sourceTree = "<group>";
+		};
+		BD632AEE8096BD4F2BEF9CBC /* App */ = {
+			isa = PBXGroup;
+			children = (
+				00C8D157279F7D4915FCF0E9 /* AppEnvironment.swift */,
+				1ADDD03A7E0A2F23E0C81334 /* GameCoordinator.swift */,
+				04B3117783774853F5B61B05 /* PlayerStore.swift */,
+				38C5C64E7D175A02D74CD7FA /* RootView.swift */,
+				3DF997EAE608F7C2B8B81146 /* RunController.swift */,
+				D8577FC884C4E6D00BF84BAE /* StarlaneApp.swift */,
+				6273001C3F605A78B9348517 /* UIRouter.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		C94BECED704C42B3D0123B1E /* Game */ = {
+			isa = PBXGroup;
+			children = (
+				2129174C3CAC50E445369D20 /* Nodes */,
+				D084C2695ACA3866FA7F27FA /* GameSceneView.swift */,
+				93D330ED40058FCE6CD9E26D /* RunScene.swift */,
+				0049B3A03C109C0768D61EDB /* SceneSupport.swift */,
+			);
+			path = Game;
+			sourceTree = "<group>";
+		};
+		CFA420C4548088C301921263 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				26D6515C261DD19B63DEADE2 /* Fonts */,
+				12FB11EC42D0922CA40AB874 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		D943F73C51B09DDAB6C9FCDD /* Overlays */ = {
+			isa = PBXGroup;
+			children = (
+				0EAA230F5EBD42802F0BA57B /* MockAdView.swift */,
+				455FD941B2850EC5826E326F /* RewardPopupView.swift */,
+				13994C374938FB83856B39F5 /* ToastView.swift */,
+			);
+			path = Overlays;
+			sourceTree = "<group>";
+		};
+		DCFA15F21768AD7D11E0D2C5 /* Daily */ = {
+			isa = PBXGroup;
+			children = (
+				9DA70A8C2E7770AABDE20385 /* DailyScreen.swift */,
+			);
+			path = Daily;
+			sourceTree = "<group>";
+		};
+		E28EC287DD9814E6F46AB5B7 /* Starlane */ = {
+			isa = PBXGroup;
+			children = (
+				BD632AEE8096BD4F2BEF9CBC /* App */,
+				4982A4752D449BD98778C1FC /* Design */,
+				62840051308F384A205A1ADE /* Features */,
+				FBF03F92E89C833A3E2CC8D8 /* Features 2 */,
+				C94BECED704C42B3D0123B1E /* Game */,
+				CFA420C4548088C301921263 /* Resources */,
+				A52E482094C64A0AE5D4A918 /* Resources 2 */,
+				301773F3ED7733C7A4996B44 /* Services */,
+			);
+			path = Starlane;
+			sourceTree = "<group>";
+		};
+		F8EDBCC8C0AB52BCD3509675 /* Shop */ = {
+			isa = PBXGroup;
+			children = (
+				3B7439EEA65448C5B0FB4B3F /* ShopScreen.swift */,
+			);
+			path = Shop;
+			sourceTree = "<group>";
+		};
+		FBF03F92E89C833A3E2CC8D8 /* Features 2 */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Features 2";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		854F178211381933799E9E0C /* Starlane */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E064BFEA830FC1CDFB03A338 /* Build configuration list for PBXNativeTarget "Starlane" */;
+			buildPhases = (
+				2DFE473E06800D0B92F47F82 /* Sources */,
+				61A3E4FB352775E9893CDE19 /* Resources */,
+				62D549358A3D53E263FF2960 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Starlane;
+			packageProductDependencies = (
+				DBE69FF51FB81BB876BF515E /* StarlaneCore */,
+			);
+			productName = Starlane;
+			productReference = 34E17FE3C471B10476C7FF27 /* Starlane.app */;
+			productType = "com.apple.product-type.application";
+		};
+		EF86E1F7BCBFA32141FEE637 /* StarlaneTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3C998B3B7130631EEAA226F8 /* Build configuration list for PBXNativeTarget "StarlaneTests" */;
+			buildPhases = (
+				5EBB2AA4064DC7CA1028F44F /* Sources */,
+				9B5D65C6075CC54BC03D473D /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DF81C83DE357BDCEA46D9873 /* PBXTargetDependency */,
+			);
+			name = StarlaneTests;
+			packageProductDependencies = (
+				A3C7AB5B306256743EFF6364 /* StarlaneCore */,
+			);
+			productName = StarlaneTests;
+			productReference = 4F2E83244BB3B988CDDE7665 /* StarlaneTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		DF3ED8C12AE2DBC251269194 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 2620;
+				TargetAttributes = {
+					854F178211381933799E9E0C = {
+						ProvisioningStyle = Automatic;
+					};
+					EF86E1F7BCBFA32141FEE637 = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = D93C03F74301F70464E068A1 /* Build configuration list for PBXProject "Starlane" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 03FBB4999C16960EEC09898D;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				7171D0C729946BE484E1B152 /* XCLocalSwiftPackageReference "Packages/StarlaneCore" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 519BBFE3711B36FDFA78CDED /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				854F178211381933799E9E0C /* Starlane */,
+				EF86E1F7BCBFA32141FEE637 /* StarlaneTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		61A3E4FB352775E9893CDE19 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				64F873EC0C25589683A8B255 /* Assets.xcassets in Resources */,
+				09F0CCC2276CBC55F5406D95 /* BigShouldersDisplay.ttf in Resources */,
+				3EF030EF8CA7FA5AEBD97FE9 /* InstrumentSans.ttf in Resources */,
+				6759118200562E339B6A7E38 /* OFL-BigShouldersDisplay.txt in Resources */,
+				1582205F9AAF41C4749617F1 /* OFL-InstrumentSans.txt in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2DFE473E06800D0B92F47F82 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1EE0227E131FA85BF6D427FE /* AdService.swift in Sources */,
+				EFD358D01AC061EF1DD495AB /* AppEnvironment.swift in Sources */,
+				B8E9EF7ED1B5EAFE5E5B8EF1 /* AudioService.swift in Sources */,
+				D5158AB683448D9295BBD415 /* BackdropNode.swift in Sources */,
+				517259ABBFE125427D6DE436 /* BossNode.swift in Sources */,
+				6BB821CA36CCFD495844B242 /* Buttons.swift in Sources */,
+				B409A54DFDFD9ED30C599EF8 /* Chrome.swift in Sources */,
+				0DB66273572CB6A527147D20 /* DailyScreen.swift in Sources */,
+				3AB2B5A20CDA1FC1663CBB21 /* DeckView.swift in Sources */,
+				C9C63050D62111CF98E9AD47 /* EffectsLayer.swift in Sources */,
+				8DB1BDF76965C0554BCAA9D7 /* EntityNode.swift in Sources */,
+				B89FAE091E8AB7F10A5A04FC /* GameCoordinator.swift in Sources */,
+				25CB3609FB1574CCBF9EF925 /* GameSceneView.swift in Sources */,
+				C7751B93E310BBCF88AD221C /* HangarScreen.swift in Sources */,
+				843E8D0E0D496D72969D4B35 /* HapticsService.swift in Sources */,
+				6A263467751E501A5258519A /* Icons.swift in Sources */,
+				EBD7317E287D551578E9166C /* MockAdView.swift in Sources */,
+				EE4F93F7069C2BD39973E761 /* ModesScreen.swift in Sources */,
+				E0849639D2F00127A70A6324 /* Panels.swift in Sources */,
+				D28080BDEA614CD1430C77F9 /* PlayerStore.swift in Sources */,
+				8877B612710C033AC2C388C2 /* PurchaseService.swift in Sources */,
+				E815724863CDB393492E50F6 /* RanksScreen.swift in Sources */,
+				27A10CD8C8C8BC59A8EC4750 /* ResultsView.swift in Sources */,
+				B19E9D2AAAB2ACE4CE2BD203 /* RewardPopupView.swift in Sources */,
+				B39C059E924F27F4B3AB4202 /* RewardStyle.swift in Sources */,
+				FC9EBBB5D8FD67D5D3747EDC /* RootView.swift in Sources */,
+				62CE48EB2F0F6BAF83903B8A /* RunController.swift in Sources */,
+				F0FBC95E1AE7DE4B8A297385 /* RunScene.swift in Sources */,
+				8F6670B2A8A076695EC57281 /* RunView.swift in Sources */,
+				BC7403A1AA82B4AE7F36290B /* SceneSupport.swift in Sources */,
+				F935832D1FE9CF128E0D8382 /* SeasonScreen.swift in Sources */,
+				E84AB06EE9812301F5639A14 /* SettingsScreen.swift in Sources */,
+				888787CD52226F70CE8EF6AC /* ShareCardView.swift in Sources */,
+				323126C4A90D3E218513A0F2 /* SheetHost.swift in Sources */,
+				E79B4FC773A8D9CBF4FAA7BA /* ShipNode.swift in Sources */,
+				120AB052C0E4EE760FD99DAF /* ShopScreen.swift in Sources */,
+				9A2BB2FAE6398A66604BA18E /* StarlaneApp.swift in Sources */,
+				3EE714C1DFA5DF63EB20E5A4 /* SynthEngine.swift in Sources */,
+				302B06CDE42E2020619A4B74 /* Theme.swift in Sources */,
+				726610E4253E229F706AFB5F /* ToastView.swift in Sources */,
+				E0EE71560D175CD9C62D4DA3 /* UIRouter.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5EBB2AA4064DC7CA1028F44F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0C625712BB4926F034C6D6FC /* AppLayerTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		DF81C83DE357BDCEA46D9873 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 854F178211381933799E9E0C /* Starlane */;
+			targetProxy = 3CBBCED4120F313058A01D22 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		104D955AC276F37DA49C8A7F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_PREVIEWS = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		80AAD1FF90033E574C1266DB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = X3VVWK6698;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Starlane/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.games";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ravo.skybound;
+				PRODUCT_NAME = Starlane;
+				SDKROOT = iphoneos;
+				SUPPORTS_MACCATALYST = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		D53637FC24EA08B0D332F70E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		D7F89F24D38D36FA1C0AF4C4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = X3VVWK6698;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Starlane/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.games";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ravo.skybound;
+				PRODUCT_NAME = Starlane;
+				SDKROOT = iphoneos;
+				SUPPORTS_MACCATALYST = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		DA20C5A28D583781444965AD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.ravosolutions.starlane.tests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Starlane.app/Starlane";
+			};
+			name = Release;
+		};
+		E8BD79F4AF83DE798B5B0839 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.ravosolutions.starlane.tests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Starlane.app/Starlane";
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		3C998B3B7130631EEAA226F8 /* Build configuration list for PBXNativeTarget "StarlaneTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E8BD79F4AF83DE798B5B0839 /* Debug */,
+				DA20C5A28D583781444965AD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		D93C03F74301F70464E068A1 /* Build configuration list for PBXProject "Starlane" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				104D955AC276F37DA49C8A7F /* Debug */,
+				D53637FC24EA08B0D332F70E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		E064BFEA830FC1CDFB03A338 /* Build configuration list for PBXNativeTarget "Starlane" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D7F89F24D38D36FA1C0AF4C4 /* Debug */,
+				80AAD1FF90033E574C1266DB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		7171D0C729946BE484E1B152 /* XCLocalSwiftPackageReference "Packages/StarlaneCore" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/StarlaneCore;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A3C7AB5B306256743EFF6364 /* StarlaneCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = StarlaneCore;
+		};
+		DBE69FF51FB81BB876BF515E /* StarlaneCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = StarlaneCore;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = DF3ED8C12AE2DBC251269194 /* Project object */;
+}
