@@ -1,10 +1,13 @@
 import SwiftUI
 
-/// Layer order (bottom → top): SpriteKit scene, deck or run UI, full-screen pages, ads, rewards, share card, toast.
+/// Layer order (bottom → top): SpriteKit scene, deck or run UI, full-screen pages, ads, rewards, share card,
+/// toast, cold-launch splash.
 /// The bottom bar is rendered once here, as a safe-area inset under the deck and the tab-root pages, so switching
 /// tabs only swaps the page content.
 struct RootView: View {
     @Environment(GameCoordinator.self) private var coordinator
+    /// Cold-launch only: the splash never comes back when the app returns from the background.
+    @State private var showsSplash = true
 
     var body: some View {
         let run = coordinator.run
@@ -55,6 +58,11 @@ struct RootView: View {
                 ToastView(message: toast)
                     .zIndex(40)
             }
+            if showsSplash {
+                SplashView { showsSplash = false }
+                    .zIndex(50)
+                    .transition(.opacity)
+            }
         }
         .background(Theme.bg)
         .animation(.easeInOut(duration: 0.3), value: run.isInRun)
@@ -63,6 +71,7 @@ struct RootView: View {
         .animation(.easeOut(duration: 0.25), value: router.ad?.id)
         .animation(.easeOut(duration: 0.22), value: router.toast)
         .animation(.easeOut(duration: 0.25), value: router.shareImage == nil)
+        .animation(.easeOut(duration: 0.32), value: showsSplash)
         .onAppear { coordinator.appDidBecomeActive() }
     }
 }

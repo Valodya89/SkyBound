@@ -3,7 +3,7 @@
     {
       "color" : {
         "color-space" : "srgb",
-        "components" : { "alpha" : "1.000", "blue" : "0.102", "green" : "0.075", "red" : "0.078" }
+        "components" : { "alpha" : "1.000", "blue" : "0.078", "green" : "0.055", "red" : "0.043" }
       },
       "idiom" : "universal"
     }

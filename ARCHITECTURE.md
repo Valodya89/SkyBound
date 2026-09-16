@@ -85,7 +85,9 @@ threshold expressed relative to viewport width so behaviour is identical across 
 
 SwiftUI over the scene. The deck (home) sits directly on the live attract run; every other destination is a
 full-screen page (`GameScreen`) rendered in the same `ZStack`, so ads, reward moments and toasts can layer above
-it. `UIRouter.SheetKind` still names eleven destinations, but several share a page and only differ by the
+it. `SplashView` is the top layer on a cold launch only: an animated launch sequence built from the same
+motifs, which fades into the deck and never returns when the app comes back from the background.
+`UIRouter.SheetKind` still names eleven destinations, but several share a page and only differ by the
 section they open on: crates/upgrades → Hangar (Rockets · Workshop · Archive crates), login/wheel/dailyChallenge
 → Daily, rank/duels → Ranks (Weekly · Duels · Badges).
 

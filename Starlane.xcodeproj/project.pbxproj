@@ -44,6 +44,7 @@
 		B8E9EF7ED1B5EAFE5E5B8EF1 /* AudioService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9086AD774530F1A65D99E259 /* AudioService.swift */; };
 		BC7403A1AA82B4AE7F36290B /* SceneSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0049B3A03C109C0768D61EDB /* SceneSupport.swift */; };
 		C7751B93E310BBCF88AD221C /* HangarScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D3FBCF379B1183039BAA394 /* HangarScreen.swift */; };
+		C83F2CBFD46C4BC6A084AF53 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663A293CEE8E47588E2BD9F4 /* SplashView.swift */; };
 		C9C63050D62111CF98E9AD47 /* EffectsLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CFF442D8F8E8E048704F19C /* EffectsLayer.swift */; };
 		D28080BDEA614CD1430C77F9 /* PlayerStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B3117783774853F5B61B05 /* PlayerStore.swift */; };
 		D5158AB683448D9295BBD415 /* BackdropNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AAC6605481D5F9340C82A3 /* BackdropNode.swift */; };
@@ -78,6 +79,7 @@
 		061BB612FC3A53377C03A055 /* RanksScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RanksScreen.swift; sourceTree = "<group>"; };
 		0EAA230F5EBD42802F0BA57B /* MockAdView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAdView.swift; sourceTree = "<group>"; };
 		12FB11EC42D0922CA40AB874 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		663A293CEE8E47588E2BD9F4 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		A1B2C30000000000000000A1 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		13994C374938FB83856B39F5 /* ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
 		14F121F4DA322D452BD21600 /* OFL-BigShouldersDisplay.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "OFL-BigShouldersDisplay.txt"; sourceTree = "<group>"; };
@@ -363,6 +365,7 @@
 			children = (
 				0EAA230F5EBD42802F0BA57B /* MockAdView.swift */,
 				455FD941B2850EC5826E326F /* RewardPopupView.swift */,
+				663A293CEE8E47588E2BD9F4 /* SplashView.swift */,
 				13994C374938FB83856B39F5 /* ToastView.swift */,
 			);
 			path = Overlays;
@@ -542,6 +545,7 @@
 				9A2BB2FAE6398A66604BA18E /* StarlaneApp.swift in Sources */,
 				3EE714C1DFA5DF63EB20E5A4 /* SynthEngine.swift in Sources */,
 				302B06CDE42E2020619A4B74 /* Theme.swift in Sources */,
+				C83F2CBFD46C4BC6A084AF53 /* SplashView.swift in Sources */,
 				726610E4253E229F706AFB5F /* ToastView.swift in Sources */,
 				E0EE71560D175CD9C62D4DA3 /* UIRouter.swift in Sources */,
 			);
