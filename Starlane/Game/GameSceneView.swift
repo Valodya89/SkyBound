@@ -19,6 +19,11 @@ struct GameSceneView: View {
                     .onChange(of: coordinator.player.profile.equippedSkinID) { _, id in
                         scene.applySkin(SkinCatalog.skin(id))
                     }
+                    // A full-screen ad hides the scene entirely; there is no reason to keep
+                    // simulating and drawing it behind a video.
+                    .onChange(of: coordinator.router.isAdPending) { _, isPending in
+                        scene.isPaused = isPending
+                    }
             } else {
                 Theme.ink.ignoresSafeArea()
             }

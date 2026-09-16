@@ -72,10 +72,20 @@ nonisolated final class SynthEngine: @unchecked Sendable {
     }
 
     func stop() {
-        lock.lock(); defer { lock.unlock() }
-        guard isRunning else { return }
-        engine.stop()
+        lock.lock()
+        guard isRunning else { lock.unlock(); return }
         isRunning = false
+        lock.unlock()
+        // The lock must be released first: `stop()` joins the render thread, and the render callback
+        // takes this same lock — holding it here deadlocks the caller against the audio thread.
+        engine.stop()
+    }
+
+    /// Drops every sounding voice without touching the engine. Used when something else — a
+    /// full-screen ad — takes over the speakers and the game should fall silent immediately.
+    func silence() {
+        lock.lock(); defer { lock.unlock() }
+        voices.removeAll()
     }
 
     /// Plays one tone. `slide` is added to the frequency over the note's lifetime (exponential ramp).

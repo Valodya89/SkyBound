@@ -112,6 +112,7 @@ struct DailyScreen: View {
                 }
             }
         }
+        .onAppear { coordinator.preload(.wheelSpin) }
         .task {
             while !Task.isCancelled {
                 resetText = GameFormat.longClock(GameFormat.secondsUntilMidnight(from: coordinator.player.clock.now))

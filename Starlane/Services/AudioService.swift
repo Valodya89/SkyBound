@@ -5,6 +5,9 @@ protocol AudioService: AnyObject {
     var soundEnabled: Bool { get set }
     var musicEnabled: Bool { get set }
     func warmUp()
+    /// Silences the game while a full-screen ad owns the speakers, and lets it speak again after.
+    func suspend()
+    func resume()
     func play(_ sound: GameSound)
     func startMusic()
     func stopMusic()
@@ -29,11 +32,27 @@ final class SynthAudioService: AudioService {
     private var intensity = 1
     private var slowMotion = false
     private var biomeIndex = 0
+    private var isSuspended = false
     private static let scale: [Double] = [0, 3, 5, 7, 10, 12, 15, 19]
 
     init() {}
 
     func warmUp() { synth.start() }
+
+    func suspend() {
+        guard !isSuspended else { return }
+        isSuspended = true
+        stopMusic()
+        // Silencing the voices is enough — the session is `.ambient` and mixes with the ad's audio.
+        // Tearing the engine down here would join the render thread from the main actor.
+        synth.silence()
+    }
+
+    func resume() {
+        guard isSuspended else { return }
+        isSuspended = false
+        synth.start()
+    }
 
     private func tone(_ f: Double, _ d: Double = 0.08, _ w: SynthEngine.Wave = .square, _ v: Double = 0.05, slide: Double = 0) {
         synth.play(frequency: f, duration: d, wave: w, volume: v, slide: slide)
@@ -47,7 +66,7 @@ final class SynthAudioService: AudioService {
     }
 
     func play(_ sound: GameSound) {
-        guard soundEnabled else { return }
+        guard soundEnabled, !isSuspended else { return }
         synth.start()
         switch sound {
         case .coin: tone(880, 0.06, .square, 0.035, slide: 300)
@@ -82,7 +101,7 @@ final class SynthAudioService: AudioService {
     }
 
     func startMusic() {
-        guard musicEnabled, musicTask == nil else { return }
+        guard musicEnabled, !isSuspended, musicTask == nil else { return }
         synth.start()
         step = 0
         musicTask = Task { [weak self] in
@@ -128,6 +147,8 @@ final class SilentAudioService: AudioService {
     var soundEnabled = false
     var musicEnabled = false
     func warmUp() {}
+    func suspend() {}
+    func resume() {}
     func play(_ sound: GameSound) {}
     func startMusic() {}
     func stopMusic() {}

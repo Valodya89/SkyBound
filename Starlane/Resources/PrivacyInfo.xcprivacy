@@ -2,13 +2,20 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<!-- Starlane does no tracking: it has no network layer, no analytics and no ad SDK. -->
+	<!-- Starlane serves ads through Google AdMob, which uses the advertising identifier to
+	     personalise them where the player has allowed it. That is tracking as Apple defines it. -->
 	<key>NSPrivacyTracking</key>
-	<false/>
+	<true/>
+	<!-- Deliberately empty. Google does not publish a tracking-domain list for the Mobile Ads SDK,
+	     and any domain listed here is hard-blocked by iOS whenever ATT is denied — which would break
+	     the non-personalised ads the SDK is supposed to fall back to. The SDK gates its own use of
+	     the IDFA on the ATT decision. Revisit if Google ever publishes a list. -->
 	<key>NSPrivacyTrackingDomains</key>
 	<array/>
-	<!-- Nothing leaves the device. The player profile is a local JSON file; purchases are handled
-	     entirely by StoreKit, which is Apple's own data collection, not the app's. -->
+	<!-- The app itself still collects nothing: the player profile is a local JSON file and purchases
+	     are handled by StoreKit. What the ad SDK collects is declared in its own privacy manifest,
+	     inside GoogleMobileAds.xcframework, and Xcode merges the two into the privacy report. The
+	     App Store Connect answers must cover both — see ADMOB.md. -->
 	<key>NSPrivacyCollectedDataTypes</key>
 	<array/>
 	<key>NSPrivacyAccessedAPITypes</key>

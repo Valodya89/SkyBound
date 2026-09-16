@@ -12,6 +12,7 @@ final class GameCoordinator {
     let audio: any AudioService
     let haptics: any HapticsService
     @ObservationIgnored private let ads: any AdService
+    @ObservationIgnored private let consent: any ConsentService
     @ObservationIgnored let purchases: any PurchaseService
     @ObservationIgnored private var rng = SystemRandomSource()
 
@@ -26,15 +27,25 @@ final class GameCoordinator {
     private(set) var isRestoring = false
     /// Bumped whenever StoreKit delivers prices, so the shop redraws with the localised catalog.
     private(set) var storeRevision = 0
+    /// When the last full-screen ad of any kind was dismissed, so interstitials keep their distance
+    /// from each other and from a rewarded video the player just sat through.
+    @ObservationIgnored private var lastFullScreenAd: Date?
+    @ObservationIgnored private var didStartAdvertising = false
+
+    /// Shortest gap between two interstitials. The every-other-transition counter alone lets two
+    /// land within seconds of each other when a player quits a run and immediately restarts.
+    private static let interstitialCooldown: TimeInterval = 75
 
     init(player: PlayerStore, run: RunController, router: UIRouter, audio: any AudioService,
-         haptics: any HapticsService, ads: any AdService, purchases: any PurchaseService) {
+         haptics: any HapticsService, ads: any AdService, consent: any ConsentService,
+         purchases: any PurchaseService) {
         self.player = player
         self.run = run
         self.router = router
         self.audio = audio
         self.haptics = haptics
         self.ads = ads
+        self.consent = consent
         self.purchases = purchases
         syncPreferences()
         run.onRunEnded = { [weak self] summary, previous in self?.bank(summary, previouslyBanked: previous) }
@@ -204,6 +215,7 @@ final class GameCoordinator {
         // The daily runs without boosts, so a boost picked for the next normal run stays equipped.
         if config.equippedBoost != nil { equippedBoost = nil }
         router.closeSheet()
+        preloadRunAds()
         run.start(config: config, screenShake: profile.settings.screenShakeEnabled)
     }
 
@@ -223,22 +235,24 @@ final class GameCoordinator {
     // MARK: - Results actions
 
     func revive() {
-        guard run.canRevive else { return }
+        guard run.canRevive, !router.isAdPending else { return }
         run.cancelReviveTimer()
-        showAd(.rewarded) { [weak self] in
-            self?.run.revive()
-            self?.router.toast("Revived with a shield")
+        Task { [weak self] in
+            guard let self, await present(.revive) else { return }
+            run.revive()
+            router.toast("Revived with a shield")
         }
     }
 
     func doubleCoins() {
-        guard run.canDoublePayout else { return }
+        guard run.canDoublePayout, !router.isAdPending else { return }
         let bonus = run.simulation.coins
-        // The revive window must not tick away while the player is watching this ad.
+        // The revive window must not tick away while the player is waiting for, and watching, this ad.
         run.reviveSuspended = true
-        showAd(.rewarded) { [weak self] in
+        Task { [weak self] in
             guard let self else { return }
-            run.reviveSuspended = false
+            defer { run.reviveSuspended = false }
+            guard await present(.doubleCoins) else { return }
             player.update { $0.coins += bonus }
             run.doublePayout()
             router.showReward(symbol: "dollarsign.circle.fill", title: "COINS DOUBLED", detail: "+\(bonus) bonus coins")
@@ -258,7 +272,7 @@ final class GameCoordinator {
             returnToHub()
             return
         }
-        maybeInterstitial { [weak self] in
+        maybeInterstitial(.runEnd) { [weak self] in
             guard let self else { return }
             if !EnergySystem.canLaunch(mode, profile: player.profile) {
                 router.toast("Out of energy")
@@ -293,7 +307,7 @@ final class GameCoordinator {
 
     func returnToHub() {
         run.cancelReviveTimer()
-        maybeInterstitial { [weak self] in
+        maybeInterstitial(.returnToHub) { [weak self] in
             self?.run.startAttract()
             self?.router.select(.home)
         }
@@ -301,23 +315,93 @@ final class GameCoordinator {
 
     // MARK: - Ads
 
-    private func maybeInterstitial(then body: @escaping @MainActor () -> Void) {
+    /// Starts consent and the ad SDK. Called once, when the launch splash clears.
+    func startAdvertising() {
+        guard !didStartAdvertising else { return }
+        didStartAdvertising = true
+        Task { [weak self] in
+            guard let self else { return }
+            await consent.gather()
+            ads.start()
+        }
+    }
+
+    /// True where the law requires a standing way to change the consent decision.
+    var showsPrivacyOptions: Bool { consent.showsPrivacyOptions }
+
+    func openPrivacyOptions() {
+        Task { [weak self] in await self?.consent.presentPrivacyOptions() }
+    }
+
+    /// Warms the units this run is going to need. Rewarded ads are requested unconditionally — VIP
+    /// and Remove Ads only buy off the interstitials — while an interstitial is only fetched when
+    /// the next transition is actually going to show one.
+    func preloadRunAds() {
+        ads.preload(.revive)
+        ads.preload(.doubleCoins)
         let p = player.profile
-        if p.isVIP || p.adsRemoved {
+        guard !p.isVIP, !p.adsRemoved, (p.interstitialCounter + 1) % 2 == 0 else { return }
+        ads.preload(.runEnd)
+        ads.preload(.returnToHub)
+    }
+
+    /// Warms a single placement. Screens that own a "watch a video" button call this when they open.
+    func preload(_ placement: AdPlacement) {
+        ads.preload(placement)
+    }
+
+    private func maybeInterstitial(_ placement: AdPlacement, then body: @escaping @MainActor () -> Void) {
+        let p = player.profile
+        guard !p.isVIP, !p.adsRemoved, !router.isAdPending else {
+            body()
+            return
+        }
+        // Back-to-back ads are the fastest way to lose a player, and AdMob polices them too.
+        if let last = lastFullScreenAd, Date().timeIntervalSince(last) < Self.interstitialCooldown {
             body()
             return
         }
         var count = 0
         player.update { $0.interstitialCounter += 1; count = $0.interstitialCounter }
-        if count % 2 == 0 {
-            showAd(.interstitial, then: body)
-        } else {
+        guard count % 2 == 0 else {
+            body()
+            return
+        }
+        Task { [weak self] in
+            guard let self else { return }
+            _ = await present(placement)
             body()
         }
     }
 
-    private func showAd(_ kind: AdKind, then body: @escaping @MainActor () -> Void) {
-        router.present(ads.makeRequest(kind: kind, onComplete: body))
+    /// Shows `placement` and reports whether the player has earned what it offers.
+    ///
+    /// A rewarded video only pays out when the SDK confirms the reward point was reached. The one
+    /// exception is a placement that hands out something free: an empty ad request is Google's
+    /// problem, and taking a revive away over it would punish the player for it.
+    @discardableResult
+    private func present(_ placement: AdPlacement) async -> Bool {
+        guard !router.isAdPending else { return false }
+        router.beginAdWait()
+        audio.suspend()
+        let outcome = await ads.show(placement)
+        audio.resume()
+        router.endAdWait()
+        if outcome != .unavailable { lastFullScreenAd = Date() }
+        guard placement.format == .rewarded else { return true }
+        switch outcome {
+        case .completed:
+            return true
+        case .abandoned:
+            router.toast("Closed too early — no reward")
+            return false
+        case .unavailable:
+            guard placement.grantsWhenUnavailable else {
+                router.toast("No video available right now")
+                return false
+            }
+            return true
+        }
     }
 
     func watchFreeGemAd() {
@@ -325,8 +409,9 @@ final class GameCoordinator {
             router.toast("No free videos left today")
             return
         }
-        showAd(.rewarded) { [weak self] in
-            guard let self else { return }
+        guard !router.isAdPending else { return }
+        Task { [weak self] in
+            guard let self, await present(.freeGems) else { return }
             player.update { DailySystem.grantFreeGems(&$0) }
             router.showReward(symbol: "diamond.fill", tint: "#7EDCF2", title: "+\(DailySystem.freeGemAdReward) GEMS", detail: "Rewarded video complete")
         }
@@ -508,7 +593,11 @@ final class GameCoordinator {
             player.update { $0.wheelSpunToday = true }
             performSpin()
         } else {
-            showAd(.rewarded) { [weak self] in self?.performSpin() }
+            guard !router.isAdPending else { return }
+            Task { [weak self] in
+                guard let self, await present(.wheelSpin) else { return }
+                performSpin()
+            }
         }
     }
 

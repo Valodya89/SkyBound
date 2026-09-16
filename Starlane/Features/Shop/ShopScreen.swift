@@ -96,6 +96,8 @@ struct ShopScreen: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.top, 2)
         }
+        // The free-gems video is two taps away from here; fetch it before it is asked for.
+        .onAppear { coordinator.preload(.freeGems) }
     }
 
     private static let subscriptionTerms = "VIP Pass is an auto-renewable subscription billed monthly to your Apple Account. It renews automatically unless cancelled at least 24 hours before the end of the current period. Manage or cancel it in Settings › Apple Account › Subscriptions. Gems, bundles and the Piggy Bank are one-time purchases."
@@ -110,7 +112,7 @@ struct ShopScreen: View {
 /// App Store Connect requires both links on any app that sells a subscription.
 enum LegalLinks {
     static let terms = URL(string: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/")!
-    static let privacy = URL(string: "https://valodya89.github.io/SkyBound/privacy/")!
+    static let privacy = URL(string: "https://ravo-starlane.netlify.app/privacy/")!
 }
 
 private struct GemCard: View {

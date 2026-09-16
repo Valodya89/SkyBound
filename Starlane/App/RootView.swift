@@ -42,6 +42,9 @@ struct RootView: View {
                 MockAdView(request: ad)
                     .zIndex(20)
                     .transition(.opacity)
+            } else if router.isAdPending {
+                AdLoadingOverlay()
+                    .zIndex(20)
             }
             if let reward = router.reward {
                 RewardPopupView(popup: reward)
@@ -59,7 +62,12 @@ struct RootView: View {
                     .zIndex(40)
             }
             if showsSplash {
-                SplashView { showsSplash = false }
+                SplashView {
+                    showsSplash = false
+                    // Consent and the ad SDK wait for the splash: ATT is ignored while the app is
+                    // not frontmost, and a form over the launch animation looks broken.
+                    coordinator.startAdvertising()
+                }
                     .zIndex(50)
                     .transition(.opacity)
             }

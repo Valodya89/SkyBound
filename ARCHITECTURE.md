@@ -42,7 +42,7 @@ Pacing is tuned for relaxed, minutes-long runs: cruising speed is 62% of the pro
 | `RunController` (`@Observable`) | Run lifecycle state machine: `attract → countdown → playing ⇄ paused → crashed → results`. Steps the simulation once per rendered frame, maps `RunEvent`s to audio/haptics, publishes a `HUDSnapshot`. The simulation itself is `@ObservationIgnored` so 60 Hz mutation never invalidates SwiftUI. |
 | `UIRouter` (`@Observable`) | Presentation only: active tab, bottom sheet, reward pop-up queue, ad request, toast, share image. |
 | `GameCoordinator` (`@Observable`) | Use-cases the views call: launch, revive, double coins, play again, shop/crate/pass/daily/duel actions. Orchestrates store + controller + router + ads + purchases. No SwiftUI imports. |
-| Services | `AudioService` (`SynthAudioService` on `AVAudioSourceNode`, plus an adaptive four-layer music sequencer), `HapticsService`, `AdService` (`MockAdService`), `PurchaseService` (`StoreKitPurchaseService` in `live()`, `SimulatedPurchaseService` in `preview()`). Each is a protocol with a production and a silent implementation. |
+| Services | `AudioService` (`SynthAudioService` on `AVAudioSourceNode`, plus an adaptive four-layer music sequencer), `HapticsService`, `AdService` (`GoogleAdService` on the Google Mobile Ads SDK, `SimulatedAdService` in previews), `ConsentService` (`UMPConsentService`), `PurchaseService` (`StoreKitPurchaseService` in `live()`, `SimulatedPurchaseService` in `preview()`). Each is a protocol with a production and a silent implementation. |
 
 ## Purchases
 
@@ -111,7 +111,8 @@ weight plus drawn currency marks and a vector `RocketMark`.
 
 ## Extending
 
-- **Real ads**: implement `AdService` and swap it in `AppEnvironment.live()`.
+- **A new ad placement**: add a case to `AdPlacement`, give it a unit in `AdUnits`, create the matching unit in AdMob ([ADMOB.md](ADMOB.md)), and call `present(_:)` from the coordinator.
+- **A different ad network**: implement `AdService` and swap it in `AppEnvironment.live()`.
 - **Cloud save**: implement `ProfileStore`.
 - **New obstacle patterns**: add a `Chunk` to `ChunkLibrary`.
 - **New biome**: add a `Biome` to `BiomeCatalog`; textures are generated automatically.

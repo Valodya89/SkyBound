@@ -1,7 +1,10 @@
 import SwiftUI
 import StarlaneCore
 
-/// Simulated ad: a placeholder creative and a claim button that unlocks when the timer ends.
+/// The simulated ad screen.
+///
+/// Only `SimulatedAdService` reaches this — previews and unit tests. Real ads are presented by the
+/// Google Mobile Ads SDK in its own window, so nothing here is on the path a player sees.
 struct MockAdView: View {
     @Environment(GameCoordinator.self) private var coordinator
     let request: AdRequest
@@ -21,7 +24,7 @@ struct MockAdView: View {
                     Spacer()
                     HStack(spacing: 8) {
                         Text(isLoaded ? "\(secondsLeft)" : "…").display(18, color: Theme.muted).monospacedDigit()
-                        Text(request.kind == .rewarded ? "Reward in" : "Skip in").capsLabel(color: Theme.faint)
+                        Text(request.placement.format == .rewarded ? "Reward in" : "Skip in").capsLabel(color: Theme.faint)
                     }
                     .padding(.horizontal, 12)
                     .frame(height: 36)
@@ -52,7 +55,7 @@ struct MockAdView: View {
                 VStack(spacing: 8) {
                     Button(action: finish) {
                         HStack {
-                            Text(request.kind == .rewarded ? "Claim reward" : "Skip")
+                            Text(request.placement.format == .rewarded ? "Claim reward" : "Skip")
                             Spacer()
                             Text(isReady ? "Ready" : "Locked · \(secondsLeft)s").font(.body(12, weight: .semibold)).tracking(0.7).textCase(.uppercase)
                         }
@@ -71,7 +74,7 @@ struct MockAdView: View {
     private func runTimeline() async {
         try? await Task.sleep(for: .milliseconds(900))
         isLoaded = true
-        secondsLeft = request.kind.gateSeconds
+        secondsLeft = request.gateSeconds
         while secondsLeft > 0 {
             try? await Task.sleep(for: .seconds(1))
             secondsLeft -= 1
@@ -83,5 +86,21 @@ struct MockAdView: View {
         guard isReady else { return }
         coordinator.audio.play(.ui)
         coordinator.router.finishAd()
+    }
+}
+
+/// Covers the game between "watch a video" and the SDK taking over the screen. Usually a flicker,
+/// because the ad is preloaded — but on a cold cache or a slow connection it is the difference
+/// between a considered wait and a button that appears to do nothing.
+struct AdLoadingOverlay: View {
+    var body: some View {
+        ZStack {
+            Color(hex: "#07090D").opacity(0.94).ignoresSafeArea()
+            VStack(spacing: 14) {
+                ProgressView().progressViewStyle(.circular).tint(Theme.muted).scaleEffect(1.3)
+                Text("Loading ad").capsLabel(color: Theme.faint)
+            }
+        }
+        .transition(.opacity)
     }
 }

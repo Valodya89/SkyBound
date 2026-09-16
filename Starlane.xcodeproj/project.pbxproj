@@ -13,6 +13,7 @@
 		120AB052C0E4EE760FD99DAF /* ShopScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B7439EEA65448C5B0FB4B3F /* ShopScreen.swift */; };
 		1582205F9AAF41C4749617F1 /* OFL-InstrumentSans.txt in Resources */ = {isa = PBXBuildFile; fileRef = 0397AB8B8A12806163B838BF /* OFL-InstrumentSans.txt */; };
 		15A3B1DB8A9B1E07422C3942 /* StarlaneCore in Frameworks */ = {isa = PBXBuildFile; productRef = DBE69FF51FB81BB876BF515E /* StarlaneCore */; };
+		1ECCFA75434880DC5733C744 /* ConsentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB618BB3EC8823C63909A742 /* ConsentService.swift */; };
 		1EE0227E131FA85BF6D427FE /* AdService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D12A120CB58BCFDBCBA6AB /* AdService.swift */; };
 		2490E8E29D8687EFE7C6B499 /* StarlaneCore in Frameworks */ = {isa = PBXBuildFile; productRef = A3C7AB5B306256743EFF6364 /* StarlaneCore */; };
 		25CB3609FB1574CCBF9EF925 /* GameSceneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D084C2695ACA3866FA7F27FA /* GameSceneView.swift */; };
@@ -20,32 +21,36 @@
 		302B06CDE42E2020619A4B74 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A0F122F57EB295AA55F141 /* Theme.swift */; };
 		323126C4A90D3E218513A0F2 /* SheetHost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7352831361C56CB32687DEFB /* SheetHost.swift */; };
 		3AB2B5A20CDA1FC1663CBB21 /* DeckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93803B1DE230817B6F970204 /* DeckView.swift */; };
+		3CCD87CB7E176CE5F6A4E1B9 /* GoogleUserMessagingPlatform in Frameworks */ = {isa = PBXBuildFile; productRef = 492B3BDDBE1C7330CE95689A /* GoogleUserMessagingPlatform */; };
 		3EE714C1DFA5DF63EB20E5A4 /* SynthEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF6753769DD8C3D5F924752 /* SynthEngine.swift */; };
 		3EF030EF8CA7FA5AEBD97FE9 /* InstrumentSans.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B186F16EE330BC0C3E2B77D1 /* InstrumentSans.ttf */; };
+		4D03031B738EF0A2595BF0E2 /* AdUnits.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD19FDD24F0586EE955D552 /* AdUnits.swift */; };
 		517259ABBFE125427D6DE436 /* BossNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C1C1CEE7F24C5B3EC12ACE /* BossNode.swift */; };
+		520E385F9A101C765CDD4BD2 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 18591EE75D0F12858D8888C0 /* PrivacyInfo.xcprivacy */; };
+		5BA12D4D2C94936742EC9DEA /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5666A20A420DF26F43CAF236 /* SplashView.swift */; };
 		62CE48EB2F0F6BAF83903B8A /* RunController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF997EAE608F7C2B8B81146 /* RunController.swift */; };
 		64F873EC0C25589683A8B255 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 12FB11EC42D0922CA40AB874 /* Assets.xcassets */; };
-		A1B2C30000000000000000A2 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = A1B2C30000000000000000A1 /* PrivacyInfo.xcprivacy */; };
 		6759118200562E339B6A7E38 /* OFL-BigShouldersDisplay.txt in Resources */ = {isa = PBXBuildFile; fileRef = 14F121F4DA322D452BD21600 /* OFL-BigShouldersDisplay.txt */; };
 		6A263467751E501A5258519A /* Icons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB9E95129A7EB4CC1EB4759 /* Icons.swift */; };
 		6BB821CA36CCFD495844B242 /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF9C9180CBD17A42A06A7ACE /* Buttons.swift */; };
 		726610E4253E229F706AFB5F /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13994C374938FB83856B39F5 /* ToastView.swift */; };
+		73AB001379ABBA023B5369DB /* StoreKitPurchaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A1B925E38E6D3B660CCB79 /* StoreKitPurchaseService.swift */; };
 		843E8D0E0D496D72969D4B35 /* HapticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D18D0E2D8CFC691F08DCEB /* HapticsService.swift */; };
 		8877B612710C033AC2C388C2 /* PurchaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9F879AD89B31041AA04F4B /* PurchaseService.swift */; };
 		888787CD52226F70CE8EF6AC /* ShareCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2796C0F8E6B329F623FCE0E8 /* ShareCardView.swift */; };
 		8DB1BDF76965C0554BCAA9D7 /* EntityNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17E4D229099AC957E5309DD /* EntityNode.swift */; };
 		8F6670B2A8A076695EC57281 /* RunView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2679DD35FA0E6E9A1DEFD3CB /* RunView.swift */; };
 		9A2BB2FAE6398A66604BA18E /* StarlaneApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8577FC884C4E6D00BF84BAE /* StarlaneApp.swift */; };
-		A1B2C30000000000000000E2 /* StoreKitPurchaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C30000000000000000E1 /* StoreKitPurchaseService.swift */; };
 		B19E9D2AAAB2ACE4CE2BD203 /* RewardPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455FD941B2850EC5826E326F /* RewardPopupView.swift */; };
 		B39C059E924F27F4B3AB4202 /* RewardStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7697E142ABD02CC5DD7AED1 /* RewardStyle.swift */; };
 		B409A54DFDFD9ED30C599EF8 /* Chrome.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8BCAD92007818AADCD7AB0E /* Chrome.swift */; };
 		B89FAE091E8AB7F10A5A04FC /* GameCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ADDD03A7E0A2F23E0C81334 /* GameCoordinator.swift */; };
 		B8E9EF7ED1B5EAFE5E5B8EF1 /* AudioService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9086AD774530F1A65D99E259 /* AudioService.swift */; };
+		BBBFAA3A230AC6849BBE2CD5 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = AE07FD4C873A8AB094363B7A /* GoogleMobileAds */; };
 		BC7403A1AA82B4AE7F36290B /* SceneSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0049B3A03C109C0768D61EDB /* SceneSupport.swift */; };
 		C7751B93E310BBCF88AD221C /* HangarScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D3FBCF379B1183039BAA394 /* HangarScreen.swift */; };
-		C83F2CBFD46C4BC6A084AF53 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663A293CEE8E47588E2BD9F4 /* SplashView.swift */; };
 		C9C63050D62111CF98E9AD47 /* EffectsLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CFF442D8F8E8E048704F19C /* EffectsLayer.swift */; };
+		CA9F04200443F69F05408485 /* GoogleAdService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32B459A86736C618349C002C /* GoogleAdService.swift */; };
 		D28080BDEA614CD1430C77F9 /* PlayerStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B3117783774853F5B61B05 /* PlayerStore.swift */; };
 		D5158AB683448D9295BBD415 /* BackdropNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AAC6605481D5F9340C82A3 /* BackdropNode.swift */; };
 		E0849639D2F00127A70A6324 /* Panels.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48F1DD965E47B93C5134098 /* Panels.swift */; };
@@ -57,6 +62,7 @@
 		EE4F93F7069C2BD39973E761 /* ModesScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB43437032A322656E73BEB /* ModesScreen.swift */; };
 		EFD358D01AC061EF1DD495AB /* AppEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C8D157279F7D4915FCF0E9 /* AppEnvironment.swift */; };
 		F0FBC95E1AE7DE4B8A297385 /* RunScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D330ED40058FCE6CD9E26D /* RunScene.swift */; };
+		F76D3E4286B187AFA39FB4D6 /* UMPConsentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE40172DBBC7EDF868D6443B /* UMPConsentService.swift */; };
 		F935832D1FE9CF128E0D8382 /* SeasonScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636EB17AA363EBB84806E38B /* SeasonScreen.swift */; };
 		FC9EBBB5D8FD67D5D3747EDC /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C5C64E7D175A02D74CD7FA /* RootView.swift */; };
 /* End PBXBuildFile section */
@@ -79,15 +85,16 @@
 		061BB612FC3A53377C03A055 /* RanksScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RanksScreen.swift; sourceTree = "<group>"; };
 		0EAA230F5EBD42802F0BA57B /* MockAdView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAdView.swift; sourceTree = "<group>"; };
 		12FB11EC42D0922CA40AB874 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		663A293CEE8E47588E2BD9F4 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
-		A1B2C30000000000000000A1 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		13994C374938FB83856B39F5 /* ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
 		14F121F4DA322D452BD21600 /* OFL-BigShouldersDisplay.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "OFL-BigShouldersDisplay.txt"; sourceTree = "<group>"; };
+		18591EE75D0F12858D8888C0 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		1ADDD03A7E0A2F23E0C81334 /* GameCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameCoordinator.swift; sourceTree = "<group>"; };
+		22A1B925E38E6D3B660CCB79 /* StoreKitPurchaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreKitPurchaseService.swift; sourceTree = "<group>"; };
 		23EE8558182BEC80886DA8F9 /* ResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsView.swift; sourceTree = "<group>"; };
 		2679DD35FA0E6E9A1DEFD3CB /* RunView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunView.swift; sourceTree = "<group>"; };
 		2796C0F8E6B329F623FCE0E8 /* ShareCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareCardView.swift; sourceTree = "<group>"; };
 		30CB2BED3BEC05D2C6F1F0F9 /* BigShouldersDisplay.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BigShouldersDisplay.ttf; sourceTree = "<group>"; };
+		32B459A86736C618349C002C /* GoogleAdService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleAdService.swift; sourceTree = "<group>"; };
 		34E17FE3C471B10476C7FF27 /* Starlane.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Starlane.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		38C5C64E7D175A02D74CD7FA /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		3B7439EEA65448C5B0FB4B3F /* ShopScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopScreen.swift; sourceTree = "<group>"; };
@@ -99,7 +106,9 @@
 		4CB9E95129A7EB4CC1EB4759 /* Icons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icons.swift; sourceTree = "<group>"; };
 		4D9F879AD89B31041AA04F4B /* PurchaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseService.swift; sourceTree = "<group>"; };
 		4F2E83244BB3B988CDDE7665 /* StarlaneTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = StarlaneTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5666A20A420DF26F43CAF236 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		5D3FBCF379B1183039BAA394 /* HangarScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HangarScreen.swift; sourceTree = "<group>"; };
+		5DAB10343190C2D17603C67A /* Starlane.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = Starlane.storekit; sourceTree = "<group>"; };
 		6273001C3F605A78B9348517 /* UIRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIRouter.swift; sourceTree = "<group>"; };
 		636EB17AA363EBB84806E38B /* SeasonScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeasonScreen.swift; sourceTree = "<group>"; };
 		7352831361C56CB32687DEFB /* SheetHost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetHost.swift; sourceTree = "<group>"; };
@@ -110,18 +119,19 @@
 		93803B1DE230817B6F970204 /* DeckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckView.swift; sourceTree = "<group>"; };
 		93D330ED40058FCE6CD9E26D /* RunScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunScene.swift; sourceTree = "<group>"; };
 		96FF7AB385BBDB98DA22103A /* AppLayerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLayerTests.swift; sourceTree = "<group>"; };
+		9AD19FDD24F0586EE955D552 /* AdUnits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdUnits.swift; sourceTree = "<group>"; };
 		9DA70A8C2E7770AABDE20385 /* DailyScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyScreen.swift; sourceTree = "<group>"; };
-		A1B2C30000000000000000E1 /* StoreKitPurchaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreKitPurchaseService.swift; sourceTree = "<group>"; };
-		A1B2C30000000000000000E3 /* Starlane.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = Starlane.storekit; sourceTree = "<group>"; };
 		A7697E142ABD02CC5DD7AED1 /* RewardStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardStyle.swift; sourceTree = "<group>"; };
 		B186F16EE330BC0C3E2B77D1 /* InstrumentSans.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = InstrumentSans.ttf; sourceTree = "<group>"; };
 		B48F1DD965E47B93C5134098 /* Panels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Panels.swift; sourceTree = "<group>"; };
 		B5AAC6605481D5F9340C82A3 /* BackdropNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackdropNode.swift; sourceTree = "<group>"; };
 		B8D12A120CB58BCFDBCBA6AB /* AdService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdService.swift; sourceTree = "<group>"; };
 		BBF6753769DD8C3D5F924752 /* SynthEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SynthEngine.swift; sourceTree = "<group>"; };
+		CB618BB3EC8823C63909A742 /* ConsentService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsentService.swift; sourceTree = "<group>"; };
 		D084C2695ACA3866FA7F27FA /* GameSceneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSceneView.swift; sourceTree = "<group>"; };
 		D17E4D229099AC957E5309DD /* EntityNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityNode.swift; sourceTree = "<group>"; };
 		D8577FC884C4E6D00BF84BAE /* StarlaneApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarlaneApp.swift; sourceTree = "<group>"; };
+		DE40172DBBC7EDF868D6443B /* UMPConsentService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UMPConsentService.swift; sourceTree = "<group>"; };
 		DF9C9180CBD17A42A06A7ACE /* Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
 		EDB43437032A322656E73BEB /* ModesScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModesScreen.swift; sourceTree = "<group>"; };
 		F8BCAD92007818AADCD7AB0E /* Chrome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chrome.swift; sourceTree = "<group>"; };
@@ -134,6 +144,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				15A3B1DB8A9B1E07422C3942 /* StarlaneCore in Frameworks */,
+				BBBFAA3A230AC6849BBE2CD5 /* GoogleMobileAds in Frameworks */,
+				3CCD87CB7E176CE5F6A4E1B9 /* GoogleUserMessagingPlatform in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -162,7 +174,7 @@
 				4C619C0B6D74B1D7E4D2AB14 /* Packages */,
 				E28EC287DD9814E6F46AB5B7 /* Starlane */,
 				A50238A150E1608824F81B89 /* StarlaneTests */,
-				A1B2C30000000000000000E3 /* Starlane.storekit */,
+				5DAB10343190C2D17603C67A /* Starlane.storekit */,
 				519BBFE3711B36FDFA78CDED /* Products */,
 			);
 			sourceTree = "<group>";
@@ -203,11 +215,15 @@
 			isa = PBXGroup;
 			children = (
 				B8D12A120CB58BCFDBCBA6AB /* AdService.swift */,
+				9AD19FDD24F0586EE955D552 /* AdUnits.swift */,
 				9086AD774530F1A65D99E259 /* AudioService.swift */,
+				CB618BB3EC8823C63909A742 /* ConsentService.swift */,
+				32B459A86736C618349C002C /* GoogleAdService.swift */,
 				F8D18D0E2D8CFC691F08DCEB /* HapticsService.swift */,
 				4D9F879AD89B31041AA04F4B /* PurchaseService.swift */,
-				A1B2C30000000000000000E1 /* StoreKitPurchaseService.swift */,
+				22A1B925E38E6D3B660CCB79 /* StoreKitPurchaseService.swift */,
 				BBF6753769DD8C3D5F924752 /* SynthEngine.swift */,
+				DE40172DBBC7EDF868D6443B /* UMPConsentService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -355,7 +371,7 @@
 			children = (
 				26D6515C261DD19B63DEADE2 /* Fonts */,
 				12FB11EC42D0922CA40AB874 /* Assets.xcassets */,
-				A1B2C30000000000000000A1 /* PrivacyInfo.xcprivacy */,
+				18591EE75D0F12858D8888C0 /* PrivacyInfo.xcprivacy */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -365,7 +381,7 @@
 			children = (
 				0EAA230F5EBD42802F0BA57B /* MockAdView.swift */,
 				455FD941B2850EC5826E326F /* RewardPopupView.swift */,
-				663A293CEE8E47588E2BD9F4 /* SplashView.swift */,
+				5666A20A420DF26F43CAF236 /* SplashView.swift */,
 				13994C374938FB83856B39F5 /* ToastView.swift */,
 			);
 			path = Overlays;
@@ -418,6 +434,8 @@
 			name = Starlane;
 			packageProductDependencies = (
 				DBE69FF51FB81BB876BF515E /* StarlaneCore */,
+				AE07FD4C873A8AB094363B7A /* GoogleMobileAds */,
+				492B3BDDBE1C7330CE95689A /* GoogleUserMessagingPlatform */,
 			);
 			productName = Starlane;
 			productReference = 34E17FE3C471B10476C7FF27 /* Starlane.app */;
@@ -453,10 +471,11 @@
 				LastUpgradeCheck = 2620;
 				TargetAttributes = {
 					854F178211381933799E9E0C = {
+						DevelopmentTeam = X3VVWK6698;
 						ProvisioningStyle = Automatic;
 					};
 					EF86E1F7BCBFA32141FEE637 = {
-						DevelopmentTeam = "";
+						DevelopmentTeam = X3VVWK6698;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -471,6 +490,8 @@
 			mainGroup = 03FBB4999C16960EEC09898D;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
+				6AC4D2A92147E57B697E8203 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
+				31B6788CC9B4E41715F1EF0A /* XCRemoteSwiftPackageReference "swift-package-manager-google-user-messaging-platform" */,
 				7171D0C729946BE484E1B152 /* XCLocalSwiftPackageReference "Packages/StarlaneCore" */,
 			);
 			preferredProjectObjectVersion = 77;
@@ -490,11 +511,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				64F873EC0C25589683A8B255 /* Assets.xcassets in Resources */,
-				A1B2C30000000000000000A2 /* PrivacyInfo.xcprivacy in Resources */,
 				09F0CCC2276CBC55F5406D95 /* BigShouldersDisplay.ttf in Resources */,
 				3EF030EF8CA7FA5AEBD97FE9 /* InstrumentSans.ttf in Resources */,
 				6759118200562E339B6A7E38 /* OFL-BigShouldersDisplay.txt in Resources */,
 				1582205F9AAF41C4749617F1 /* OFL-InstrumentSans.txt in Resources */,
+				520E385F9A101C765CDD4BD2 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -506,18 +527,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				1EE0227E131FA85BF6D427FE /* AdService.swift in Sources */,
+				4D03031B738EF0A2595BF0E2 /* AdUnits.swift in Sources */,
 				EFD358D01AC061EF1DD495AB /* AppEnvironment.swift in Sources */,
 				B8E9EF7ED1B5EAFE5E5B8EF1 /* AudioService.swift in Sources */,
 				D5158AB683448D9295BBD415 /* BackdropNode.swift in Sources */,
 				517259ABBFE125427D6DE436 /* BossNode.swift in Sources */,
 				6BB821CA36CCFD495844B242 /* Buttons.swift in Sources */,
 				B409A54DFDFD9ED30C599EF8 /* Chrome.swift in Sources */,
+				1ECCFA75434880DC5733C744 /* ConsentService.swift in Sources */,
 				0DB66273572CB6A527147D20 /* DailyScreen.swift in Sources */,
 				3AB2B5A20CDA1FC1663CBB21 /* DeckView.swift in Sources */,
 				C9C63050D62111CF98E9AD47 /* EffectsLayer.swift in Sources */,
 				8DB1BDF76965C0554BCAA9D7 /* EntityNode.swift in Sources */,
 				B89FAE091E8AB7F10A5A04FC /* GameCoordinator.swift in Sources */,
 				25CB3609FB1574CCBF9EF925 /* GameSceneView.swift in Sources */,
+				CA9F04200443F69F05408485 /* GoogleAdService.swift in Sources */,
 				C7751B93E310BBCF88AD221C /* HangarScreen.swift in Sources */,
 				843E8D0E0D496D72969D4B35 /* HapticsService.swift in Sources */,
 				6A263467751E501A5258519A /* Icons.swift in Sources */,
@@ -526,7 +550,6 @@
 				E0849639D2F00127A70A6324 /* Panels.swift in Sources */,
 				D28080BDEA614CD1430C77F9 /* PlayerStore.swift in Sources */,
 				8877B612710C033AC2C388C2 /* PurchaseService.swift in Sources */,
-				A1B2C30000000000000000E2 /* StoreKitPurchaseService.swift in Sources */,
 				E815724863CDB393492E50F6 /* RanksScreen.swift in Sources */,
 				27A10CD8C8C8BC59A8EC4750 /* ResultsView.swift in Sources */,
 				B19E9D2AAAB2ACE4CE2BD203 /* RewardPopupView.swift in Sources */,
@@ -542,12 +565,14 @@
 				323126C4A90D3E218513A0F2 /* SheetHost.swift in Sources */,
 				E79B4FC773A8D9CBF4FAA7BA /* ShipNode.swift in Sources */,
 				120AB052C0E4EE760FD99DAF /* ShopScreen.swift in Sources */,
+				5BA12D4D2C94936742EC9DEA /* SplashView.swift in Sources */,
 				9A2BB2FAE6398A66604BA18E /* StarlaneApp.swift in Sources */,
+				73AB001379ABBA023B5369DB /* StoreKitPurchaseService.swift in Sources */,
 				3EE714C1DFA5DF63EB20E5A4 /* SynthEngine.swift in Sources */,
 				302B06CDE42E2020619A4B74 /* Theme.swift in Sources */,
-				C83F2CBFD46C4BC6A084AF53 /* SplashView.swift in Sources */,
 				726610E4253E229F706AFB5F /* ToastView.swift in Sources */,
 				E0EE71560D175CD9C62D4DA3 /* UIRouter.swift in Sources */,
+				F76D3E4286B187AFA39FB4D6 /* UMPConsentService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -648,13 +673,13 @@
 		80AAD1FF90033E574C1266DB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ADMOB_APP_ID = "ca-app-pub-9054557293639529~8799879891";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = X3VVWK6698;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 3;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = Starlane/Info.plist;
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.games";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -663,8 +688,11 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ravo.skybound;
 				PRODUCT_NAME = Starlane;
 				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
-				TARGETED_DEVICE_FAMILY = 1;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -739,13 +767,13 @@
 		D7F89F24D38D36FA1C0AF4C4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ADMOB_APP_ID = "ca-app-pub-9054557293639529~8799879891";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = X3VVWK6698;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 3;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = Starlane/Info.plist;
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.games";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -754,8 +782,11 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ravo.skybound;
 				PRODUCT_NAME = Starlane;
 				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
-				TARGETED_DEVICE_FAMILY = 1;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -771,7 +802,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ravo.skybound.tests;
 				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Starlane.app/Starlane";
 			};
 			name = Release;
@@ -788,7 +819,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ravo.skybound.tests;
 				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Starlane.app/Starlane";
 			};
 			name = Debug;
@@ -832,10 +863,39 @@
 		};
 /* End XCLocalSwiftPackageReference section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		31B6788CC9B4E41715F1EF0A /* XCRemoteSwiftPackageReference "swift-package-manager-google-user-messaging-platform" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googleads/swift-package-manager-google-user-messaging-platform";
+			requirement = {
+				kind = exactVersion;
+				version = 3.1.0;
+			};
+		};
+		6AC4D2A92147E57B697E8203 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googleads/swift-package-manager-google-mobile-ads";
+			requirement = {
+				kind = exactVersion;
+				version = 13.9.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
+		492B3BDDBE1C7330CE95689A /* GoogleUserMessagingPlatform */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 31B6788CC9B4E41715F1EF0A /* XCRemoteSwiftPackageReference "swift-package-manager-google-user-messaging-platform" */;
+			productName = GoogleUserMessagingPlatform;
+		};
 		A3C7AB5B306256743EFF6364 /* StarlaneCore */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = StarlaneCore;
+		};
+		AE07FD4C873A8AB094363B7A /* GoogleMobileAds */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6AC4D2A92147E57B697E8203 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */;
+			productName = GoogleMobileAds;
 		};
 		DBE69FF51FB81BB876BF515E /* StarlaneCore */ = {
 			isa = XCSwiftPackageProductDependency;

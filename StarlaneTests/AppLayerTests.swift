@@ -175,15 +175,46 @@ struct GameCoordinatorTests {
     }
 
     @Test("Rewarded ad gates free gems")
-    func freeGems() {
+    func freeGems() async throws {
         let c = make()
         c.watchFreeGemAd()
-        #expect(c.router.ad?.kind == .rewarded)
+        try await settle()
+        #expect(c.router.ad?.placement == .freeGems)
         #expect(c.player.profile.gems == 20)
         c.router.finishAd()
+        try await settle()
         #expect(c.router.ad == nil)
         #expect(c.player.profile.gems == 25)
         #expect(c.player.profile.freeGemAdsWatchedToday == 1)
+    }
+
+    @Test("Closing a rewarded ad early pays nothing")
+    func abandonedRewardedAd() async throws {
+        let c = make()
+        c.watchFreeGemAd()
+        try await settle()
+        c.router.finishAd(.abandoned)
+        try await settle()
+        #expect(c.router.ad == nil)
+        #expect(c.player.profile.gems == 20)
+        #expect(c.player.profile.freeGemAdsWatchedToday == 0)
+    }
+
+    @Test("Remove Ads skips the interstitial between runs")
+    func removeAdsSkipsInterstitial() async throws {
+        let c = make { $0.adsRemoved = true }
+        c.run.viewportChanged(CGSize(width: 390, height: 844))
+        c.launch(.classic)
+        c.returnToHub()
+        try await settle()
+        #expect(c.router.ad == nil)
+        #expect(c.router.tab == .home)
+        #expect(c.player.profile.interstitialCounter == 0)
+    }
+
+    /// The ad path hops through a `Task`, so the assertions have to let the main actor breathe first.
+    private func settle() async throws {
+        try await Task.sleep(for: .milliseconds(60))
     }
 
     @Test("A verified transaction grants the product and shows the reward")

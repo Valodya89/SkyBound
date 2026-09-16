@@ -2,8 +2,9 @@
 
 A native iOS port of the arcade prototype (originally *SkyBound*) — a fake-3D lane runner set in deep space, with a complete free-to-play
 loop (energy, coins/gems, boosts, upgrades, crates, season pass, daily missions, duels, leaderboards and
-simulated ads). The in-game economy is simulated locally and there is no network or ad SDK, but real-money
-products (gem packs, bundles, Remove Ads and the VIP subscription) go through **StoreKit 2**.
+ads). The in-game economy is simulated locally; ads are real, served by **Google AdMob** behind Google's
+UMP consent flow ([ADMOB.md](ADMOB.md)), and real-money products (gem packs, bundles, Remove Ads and the
+VIP subscription) go through **StoreKit 2**.
 
 - **iOS 17+**, Swift 6 language mode, MainActor default isolation, Swift Testing.
 - **SwiftUI** for every screen, **SpriteKit** for the world, **AVAudioEngine** synth for all audio (no assets).

@@ -72,6 +72,9 @@ final class UIRouter {
     private(set) var sheet: SheetKind?
     private(set) var reward: RewardPopup?
     private(set) var ad: AdRequest?
+    /// True from the moment an ad is asked for until it is gone, covering the load as well as the
+    /// presentation. Freezes the scene and blocks a second ad from being started underneath.
+    private(set) var isAdPending = false
     private(set) var toast: ToastMessage?
     var shareImage: UIImage?
 
@@ -136,11 +139,15 @@ final class UIRouter {
 
     func present(_ request: AdRequest) { ad = request }
 
-    func finishAd() {
+    func finishAd(_ outcome: AdOutcome = .completed) {
         let current = ad
         ad = nil
-        current?.onComplete()
+        current?.onFinish(outcome)
     }
+
+    func beginAdWait() { isAdPending = true }
+
+    func endAdWait() { isAdPending = false }
 
     // MARK: Toasts
 
