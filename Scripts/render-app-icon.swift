@@ -9,7 +9,7 @@ import CoreGraphics
 let S: CGFloat = 1024
 let cs = CGColorSpace(name: CGColorSpace.sRGB)!
 let ctx = CGContext(data: nil, width: Int(S), height: Int(S), bitsPerComponent: 8, bytesPerRow: 0,
-                    space: cs, bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)!
+                    space: cs, bitmapInfo: CGImageAlphaInfo.noneSkipLast.rawValue)!
 ctx.setShouldAntialias(true)
 ctx.setAllowsAntialiasing(true)
 ctx.interpolationQuality = .high

@@ -29,7 +29,7 @@ settings:
     TARGETED_DEVICE_FAMILY: "1"
     ENABLE_USER_SCRIPT_SANDBOXING: YES
     CODE_SIGN_STYLE: Automatic
-    DEVELOPMENT_TEAM: ""
+    DEVELOPMENT_TEAM: X3VVWK6698
     SWIFT_EMIT_LOC_STRINGS: YES
     LOCALIZATION_PREFERS_STRING_CATALOGS: YES
     ENABLE_PREVIEWS: YES
@@ -64,6 +64,7 @@ targets:
         UIViewControllerBasedStatusBarAppearance: false
         UIRequiresFullScreen: true
         ITSAppUsesNonExemptEncryption: false
+        NSPhotoLibraryAddUsageDescription: Save your run card to Photos.
         LSRequiresIPhoneOS: true
         UIApplicationSupportsIndirectInputEvents: true
     settings:

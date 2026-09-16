@@ -26,6 +26,8 @@
 	<string>public.app-category.games</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Save your run card to Photos.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>BigShouldersDisplay.ttf</string>
