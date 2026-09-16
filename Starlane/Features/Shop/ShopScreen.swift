@@ -110,7 +110,7 @@ struct ShopScreen: View {
 /// App Store Connect requires both links on any app that sells a subscription.
 enum LegalLinks {
     static let terms = URL(string: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/")!
-    static let privacy = URL(string: "https://ravosolutions.com/starlane/privacy")!
+    static let privacy = URL(string: "https://valodya89.github.io/SkyBound/privacy/")!
 }
 
 private struct GemCard: View {
