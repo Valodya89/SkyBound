@@ -1,7 +1,8 @@
 import SwiftUI
 import StarlaneCore
 
-/// "Supply": VIP, gem packs, bundles, boosts and energy. Every purchase is simulated.
+/// "Supply": VIP, gem packs, bundles, boosts and energy. Real-money rows go through StoreKit;
+/// boosts, energy and crates are spent from the in-game wallet.
 struct ShopScreen: View {
     @Environment(GameCoordinator.self) private var coordinator
 
@@ -10,7 +11,7 @@ struct ShopScreen: View {
         let vipOwned = ShopSystem.isOwned(.vip, profile: p)
         GameScreen("Supply", kicker: "Shop", tab: .shop) {
             Button {
-                coordinator.purchase(.vip)
+                if vipOwned { coordinator.manageSubscription() } else { coordinator.purchase(.vip) }
             } label: {
                 HStack(spacing: 14) {
                     LineIcon(name: "crown", size: 22, color: Theme.gold)
@@ -22,11 +23,14 @@ struct ShopScreen: View {
                             Tag(vipOwned ? "Active" : "Best value", color: Theme.gold)
                         }
                         Text(StoreProduct.vip.detail).font(.body(11.5)).foregroundStyle(Theme.muted).lineLimit(2)
+                        if !vipOwned, let intro = coordinator.introOffer(for: .vip) {
+                            Text(intro).capsLabel(9, color: Theme.ice)
+                        }
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     VStack(alignment: .trailing, spacing: 2) {
-                        Text(vipOwned ? "Active" : "$6.99").display(20)
-                        Text(vipOwned ? "renews monthly" : "per month").capsLabel(9, color: Theme.faint)
+                        Text(vipOwned ? "Active" : coordinator.priceAmount(for: .vip)).display(20)
+                        Text(vipRenewalNote(p)).capsLabel(9, color: Theme.faint)
                     }
                 }
                 .padding(.horizontal, 16).padding(.vertical, 14)
@@ -35,7 +39,7 @@ struct ShopScreen: View {
                 .clipShape(ChamferShape(cut: 14))
             }
             .buttonStyle(PressScaleStyle())
-            .disabled(vipOwned || coordinator.isPurchasing)
+            .disabled(coordinator.isPurchasing)
 
             SectionRule("Gems")
             let packs = StoreProduct.gemPacks
@@ -47,7 +51,7 @@ struct ShopScreen: View {
             }
 
             SectionRule("Bundles")
-            ProductRow(product: .founderBundle, icon: "gift", tint: Theme.flare, tag: Tag("70% off"), strike: "$19.99", kind: .flare)
+            ProductRow(product: .founderBundle, icon: "gift", tint: Theme.flare, tag: Tag("Best starter"), kind: .flare)
             ProductRow(product: .piggyBank, icon: "banknote", tint: Theme.gold, subtitleOverride: "Fills as you play · \(GameFormat.grouped(ShopSystem.piggyBankValue(p))) coins inside")
             ProductRow(product: .removeAds, icon: "circle.slash", tint: Theme.muted)
 
@@ -71,11 +75,42 @@ struct ShopScreen: View {
                     .buttonStyle(.pill(.ice, disabled: adsLeft <= 0))
                     .disabled(adsLeft <= 0)
             }
-            Text("Simulated storefront. Nothing here charges real money.")
-                .font(.body(11.5)).foregroundStyle(Theme.faint)
+            SectionRule("Purchases")
+            ItemRow(symbol: "arrow.clockwise", tint: Theme.muted, title: "Restore purchases",
+                    subtitle: "Brings back VIP, Remove Ads and bundles") {
+                Button(coordinator.isRestoring ? "…" : "Restore") { coordinator.restorePurchases() }
+                    .buttonStyle(.pill(.ghost, disabled: coordinator.isRestoring))
+                    .disabled(coordinator.isRestoring)
+            }
+            // Apple requires the renewal terms to be visible next to an auto-renewable subscription.
+            Text(Self.subscriptionTerms)
+                .font(.body(11)).foregroundStyle(Theme.faint).lineSpacing(2)
+                .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.top, 4)
+            HStack(spacing: 14) {
+                Link("Terms of Use", destination: LegalLinks.terms)
+                Link("Privacy Policy", destination: LegalLinks.privacy)
+            }
+            .font(.body(11, weight: .semibold))
+            .foregroundStyle(Theme.muted)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.top, 2)
         }
     }
+
+    private static let subscriptionTerms = "VIP Pass is an auto-renewable subscription billed monthly to your Apple Account. It renews automatically unless cancelled at least 24 hours before the end of the current period. Manage or cancel it in Settings › Apple Account › Subscriptions. Gems, bundles and the Piggy Bank are one-time purchases."
+
+    private func vipRenewalNote(_ p: PlayerProfile) -> String {
+        guard p.isVIP else { return "per month" }
+        guard let date = p.vipRenewalDate else { return "manage" }
+        return "renews \(date.formatted(.dateTime.month(.abbreviated).day()))"
+    }
+}
+
+/// App Store Connect requires both links on any app that sells a subscription.
+enum LegalLinks {
+    static let terms = URL(string: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/")!
+    static let privacy = URL(string: "https://ravosolutions.com/starlane/privacy")!
 }
 
 private struct GemCard: View {
@@ -93,7 +128,7 @@ private struct GemCard: View {
             }
             Text(bonus ?? "Starter").capsLabel(9, color: bonus == nil ? Theme.faint : Theme.ice)
             HStack {
-                Text(product.priceLabel).display(18, color: Theme.gold)
+                Text(coordinator.priceAmount(for: product)).display(18, color: Theme.gold)
                 Spacer()
                 Button("Buy") { coordinator.purchase(product) }
                     .buttonStyle(.pill(.ghost))
@@ -116,21 +151,15 @@ private struct ProductRow: View {
     let icon: String
     var tint: Color = Theme.muted
     var tag: Tag? = nil
-    var strike: String? = nil
     var kind: PillButtonStyle.Kind = .ghost
     var subtitleOverride: String? = nil
 
     var body: some View {
         let owned = ShopSystem.isOwned(product, profile: coordinator.player.profile)
         ItemRow(symbol: icon, tint: tint, title: product.name, subtitle: subtitleOverride ?? product.detail, tag: owned ? nil : tag) {
-            VStack(alignment: .trailing, spacing: 2) {
-                if let strike, !owned {
-                    Text(strike).font(.body(10)).strikethrough().foregroundStyle(Theme.faint)
-                }
-                Button(owned ? "Owned" : product.priceLabel) { coordinator.purchase(product) }
-                    .buttonStyle(.pill(kind, disabled: owned || coordinator.isPurchasing))
-                    .disabled(owned || coordinator.isPurchasing)
-            }
+            Button(owned ? "Owned" : coordinator.priceLabel(for: product)) { coordinator.purchase(product) }
+                .buttonStyle(.pill(kind, disabled: owned || coordinator.isPurchasing))
+                .disabled(owned || coordinator.isPurchasing)
         }
     }
 }

@@ -25,6 +25,7 @@
 		517259ABBFE125427D6DE436 /* BossNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C1C1CEE7F24C5B3EC12ACE /* BossNode.swift */; };
 		62CE48EB2F0F6BAF83903B8A /* RunController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF997EAE608F7C2B8B81146 /* RunController.swift */; };
 		64F873EC0C25589683A8B255 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 12FB11EC42D0922CA40AB874 /* Assets.xcassets */; };
+		A1B2C30000000000000000A2 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = A1B2C30000000000000000A1 /* PrivacyInfo.xcprivacy */; };
 		6759118200562E339B6A7E38 /* OFL-BigShouldersDisplay.txt in Resources */ = {isa = PBXBuildFile; fileRef = 14F121F4DA322D452BD21600 /* OFL-BigShouldersDisplay.txt */; };
 		6A263467751E501A5258519A /* Icons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB9E95129A7EB4CC1EB4759 /* Icons.swift */; };
 		6BB821CA36CCFD495844B242 /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF9C9180CBD17A42A06A7ACE /* Buttons.swift */; };
@@ -35,6 +36,7 @@
 		8DB1BDF76965C0554BCAA9D7 /* EntityNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17E4D229099AC957E5309DD /* EntityNode.swift */; };
 		8F6670B2A8A076695EC57281 /* RunView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2679DD35FA0E6E9A1DEFD3CB /* RunView.swift */; };
 		9A2BB2FAE6398A66604BA18E /* StarlaneApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8577FC884C4E6D00BF84BAE /* StarlaneApp.swift */; };
+		A1B2C30000000000000000E2 /* StoreKitPurchaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C30000000000000000E1 /* StoreKitPurchaseService.swift */; };
 		B19E9D2AAAB2ACE4CE2BD203 /* RewardPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455FD941B2850EC5826E326F /* RewardPopupView.swift */; };
 		B39C059E924F27F4B3AB4202 /* RewardStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7697E142ABD02CC5DD7AED1 /* RewardStyle.swift */; };
 		B409A54DFDFD9ED30C599EF8 /* Chrome.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8BCAD92007818AADCD7AB0E /* Chrome.swift */; };
@@ -76,6 +78,7 @@
 		061BB612FC3A53377C03A055 /* RanksScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RanksScreen.swift; sourceTree = "<group>"; };
 		0EAA230F5EBD42802F0BA57B /* MockAdView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAdView.swift; sourceTree = "<group>"; };
 		12FB11EC42D0922CA40AB874 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A1B2C30000000000000000A1 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		13994C374938FB83856B39F5 /* ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
 		14F121F4DA322D452BD21600 /* OFL-BigShouldersDisplay.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "OFL-BigShouldersDisplay.txt"; sourceTree = "<group>"; };
 		1ADDD03A7E0A2F23E0C81334 /* GameCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameCoordinator.swift; sourceTree = "<group>"; };
@@ -106,6 +109,8 @@
 		93D330ED40058FCE6CD9E26D /* RunScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunScene.swift; sourceTree = "<group>"; };
 		96FF7AB385BBDB98DA22103A /* AppLayerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLayerTests.swift; sourceTree = "<group>"; };
 		9DA70A8C2E7770AABDE20385 /* DailyScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyScreen.swift; sourceTree = "<group>"; };
+		A1B2C30000000000000000E1 /* StoreKitPurchaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreKitPurchaseService.swift; sourceTree = "<group>"; };
+		A1B2C30000000000000000E3 /* Starlane.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = Starlane.storekit; sourceTree = "<group>"; };
 		A7697E142ABD02CC5DD7AED1 /* RewardStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardStyle.swift; sourceTree = "<group>"; };
 		B186F16EE330BC0C3E2B77D1 /* InstrumentSans.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = InstrumentSans.ttf; sourceTree = "<group>"; };
 		B48F1DD965E47B93C5134098 /* Panels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Panels.swift; sourceTree = "<group>"; };
@@ -155,6 +160,7 @@
 				4C619C0B6D74B1D7E4D2AB14 /* Packages */,
 				E28EC287DD9814E6F46AB5B7 /* Starlane */,
 				A50238A150E1608824F81B89 /* StarlaneTests */,
+				A1B2C30000000000000000E3 /* Starlane.storekit */,
 				519BBFE3711B36FDFA78CDED /* Products */,
 			);
 			sourceTree = "<group>";
@@ -198,6 +204,7 @@
 				9086AD774530F1A65D99E259 /* AudioService.swift */,
 				F8D18D0E2D8CFC691F08DCEB /* HapticsService.swift */,
 				4D9F879AD89B31041AA04F4B /* PurchaseService.swift */,
+				A1B2C30000000000000000E1 /* StoreKitPurchaseService.swift */,
 				BBF6753769DD8C3D5F924752 /* SynthEngine.swift */,
 			);
 			path = Services;
@@ -308,13 +315,6 @@
 			path = StarlaneTests;
 			sourceTree = "<group>";
 		};
-		A52E482094C64A0AE5D4A918 /* Resources 2 */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "Resources 2";
-			sourceTree = "<group>";
-		};
 		B4B48ACEBAA38DCF12EC0A17 /* Run */ = {
 			isa = PBXGroup;
 			children = (
@@ -353,6 +353,7 @@
 			children = (
 				26D6515C261DD19B63DEADE2 /* Fonts */,
 				12FB11EC42D0922CA40AB874 /* Assets.xcassets */,
+				A1B2C30000000000000000A1 /* PrivacyInfo.xcprivacy */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -381,10 +382,8 @@
 				BD632AEE8096BD4F2BEF9CBC /* App */,
 				4982A4752D449BD98778C1FC /* Design */,
 				62840051308F384A205A1ADE /* Features */,
-				FBF03F92E89C833A3E2CC8D8 /* Features 2 */,
 				C94BECED704C42B3D0123B1E /* Game */,
 				CFA420C4548088C301921263 /* Resources */,
-				A52E482094C64A0AE5D4A918 /* Resources 2 */,
 				301773F3ED7733C7A4996B44 /* Services */,
 			);
 			path = Starlane;
@@ -396,13 +395,6 @@
 				3B7439EEA65448C5B0FB4B3F /* ShopScreen.swift */,
 			);
 			path = Shop;
-			sourceTree = "<group>";
-		};
-		FBF03F92E89C833A3E2CC8D8 /* Features 2 */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "Features 2";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -495,6 +487,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				64F873EC0C25589683A8B255 /* Assets.xcassets in Resources */,
+				A1B2C30000000000000000A2 /* PrivacyInfo.xcprivacy in Resources */,
 				09F0CCC2276CBC55F5406D95 /* BigShouldersDisplay.ttf in Resources */,
 				3EF030EF8CA7FA5AEBD97FE9 /* InstrumentSans.ttf in Resources */,
 				6759118200562E339B6A7E38 /* OFL-BigShouldersDisplay.txt in Resources */,
@@ -530,6 +523,7 @@
 				E0849639D2F00127A70A6324 /* Panels.swift in Sources */,
 				D28080BDEA614CD1430C77F9 /* PlayerStore.swift in Sources */,
 				8877B612710C033AC2C388C2 /* PurchaseService.swift in Sources */,
+				A1B2C30000000000000000E2 /* StoreKitPurchaseService.swift in Sources */,
 				E815724863CDB393492E50F6 /* RanksScreen.swift in Sources */,
 				27A10CD8C8C8BC59A8EC4750 /* ResultsView.swift in Sources */,
 				B19E9D2AAAB2ACE4CE2BD203 /* RewardPopupView.swift in Sources */,
@@ -773,7 +767,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ravosolutions.starlane.tests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ravo.skybound.tests;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Starlane.app/Starlane";
@@ -790,7 +784,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ravosolutions.starlane.tests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ravo.skybound.tests;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Starlane.app/Starlane";

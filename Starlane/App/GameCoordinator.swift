@@ -12,7 +12,7 @@ final class GameCoordinator {
     let audio: any AudioService
     let haptics: any HapticsService
     @ObservationIgnored private let ads: any AdService
-    @ObservationIgnored private let purchases: any PurchaseService
+    @ObservationIgnored let purchases: any PurchaseService
     @ObservationIgnored private var rng = SystemRandomSource()
 
     /// Boost chosen in the mode picker. Consumed when a run launches.
@@ -23,6 +23,9 @@ final class GameCoordinator {
     private(set) var wheelAngle: Double = 0
     private(set) var isWheelSpinning = false
     private(set) var isPurchasing = false
+    private(set) var isRestoring = false
+    /// Bumped whenever StoreKit delivers prices, so the shop redraws with the localised catalog.
+    private(set) var storeRevision = 0
 
     init(player: PlayerStore, run: RunController, router: UIRouter, audio: any AudioService,
          haptics: any HapticsService, ads: any AdService, purchases: any PurchaseService) {
@@ -35,6 +38,82 @@ final class GameCoordinator {
         self.purchases = purchases
         syncPreferences()
         run.onRunEnded = { [weak self] summary, previous in self?.bank(summary, previouslyBanked: previous) }
+        wireStore()
+    }
+
+    // MARK: - Storefront wiring
+
+    /// Connects the storefront before anything else can buy: transactions that arrive from another device,
+    /// from an Ask to Buy approval or from an interrupted grant land here without the shop being open.
+    private func wireStore() {
+        purchases.onTransaction = { [weak self] info in
+            guard let self else { return false }
+            return grant(info)
+        }
+        purchases.onEntitlements = { [weak self] entitlements in
+            guard let self else { return }
+            let wasVIP = player.profile.isVIP
+            player.update { ShopSystem.sync(entitlements, to: &$0) }
+            player.saveNow()
+            storeRevision += 1
+            if wasVIP, !entitlements.isVIP {
+                router.toast("VIP has lapsed — renew any time in Supply")
+            }
+        }
+        purchases.start()
+    }
+
+    /// Applies one verified transaction. Returns `true` once the grant is on disk, which is the signal the
+    /// service needs before it may finish the transaction.
+    @discardableResult
+    private func grant(_ info: StoreTransactionInfo) -> Bool {
+        var granted: String?
+        var isFresh = false
+        player.update { profile in
+            isFresh = ShopSystem.redeem(transactionID: info.transactionID, profile: &profile)
+            guard isFresh else { return }
+            granted = ShopSystem.apply(info.product, to: &profile)
+        }
+        player.saveNow()
+        storeRevision += 1
+        // Already redeemed, or a restore of something the profile knows about: nothing to celebrate.
+        guard isFresh, !info.isRestore else { return true }
+        if let granted { showPurchaseReward(info.product, granted: granted) }
+        haptics.success()
+        return true
+    }
+
+    private func showPurchaseReward(_ product: StoreProduct, granted: String) {
+        let title: String
+        switch product.grant {
+        case .vip: title = "VIP ACTIVATED"
+        case .removeAds: title = "ADS REMOVED"
+        case .founderBundle: title = "BUNDLE UNLOCKED"
+        case .piggyBank: title = "SMASHED"
+        case .gems(let n): title = "+\(n) GEMS"
+        }
+        router.showReward(symbol: product.symbol, tint: product.grant == .vip ? "#F2B544" : "#7EDCF2",
+                          title: title, detail: granted)
+    }
+
+    /// Localised price for a product, falling back to the catalog placeholder until StoreKit answers.
+    func priceLabel(for product: StoreProduct) -> String {
+        _ = storeRevision
+        guard let display = purchases.display[product.id] else {
+            return product.priceLabel + product.fallbackPeriodSuffix
+        }
+        return display.priceWithPeriod
+    }
+
+    /// Just the amount, without the "/mo" suffix — for layouts that print the period separately.
+    func priceAmount(for product: StoreProduct) -> String {
+        _ = storeRevision
+        return purchases.display[product.id]?.price ?? product.priceLabel
+    }
+
+    func introOffer(for product: StoreProduct) -> String? {
+        _ = storeRevision
+        return purchases.display[product.id]?.introOffer
     }
 
     // MARK: - App lifecycle
@@ -45,6 +124,8 @@ final class GameCoordinator {
         player.startTicking()
         run.appDidBecomeActive()
         audio.warmUp()
+        // Picks up a renewal or a cancellation made in Settings while the app was backgrounded.
+        Task { [weak self] in await self?.purchases.refresh() }
     }
 
     func appWillResignActive() {
@@ -253,28 +334,50 @@ final class GameCoordinator {
 
     // MARK: - Shop
 
+    /// Starts a real App Store purchase. The grant itself happens in `grant(_:)` when the verified
+    /// transaction arrives, so an Ask to Buy approval that lands minutes later is handled identically.
     func purchase(_ product: StoreProduct) {
         guard !isPurchasing, !ShopSystem.isOwned(product, profile: player.profile) else { return }
         isPurchasing = true
         audio.play(.ui)
         Task { [weak self] in
             guard let self else { return }
-            let ok = await purchases.purchase(product)
+            let outcome = await purchases.purchase(product)
             isPurchasing = false
-            guard ok else { router.toast("Purchase cancelled"); return }
-            var granted: String?
-            player.update { granted = ShopSystem.apply(product, to: &$0) }
-            let title: String
-            switch product.grant {
-            case .vip: title = "VIP ACTIVATED"
-            case .removeAds: title = "ADS REMOVED"
-            case .founderBundle: title = "BUNDLE UNLOCKED"
-            case .piggyBank: title = "SMASHED"
-            case .gems(let n): title = "+\(n) GEMS"
+            switch outcome {
+            case .success:
+                break
+            case .cancelled:
+                break
+            case .pending:
+                router.toast("Waiting for approval — it will unlock automatically")
+            case .failed(let message):
+                router.toast(message)
             }
-            router.showReward(symbol: product.symbol, tint: product.grant == .vip ? "#F2B544" : "#7EDCF2", title: title, detail: (granted ?? "") + " · simulated purchase, no charge made")
-            haptics.success()
         }
+    }
+
+    func restorePurchases() {
+        guard !isRestoring else { return }
+        isRestoring = true
+        audio.play(.ui)
+        Task { [weak self] in
+            guard let self else { return }
+            let ok = await purchases.restore()
+            isRestoring = false
+            let p = player.profile
+            if !ok {
+                router.toast("Could not reach the App Store")
+            } else if p.isVIP || p.adsRemoved || p.founderBundleOwned {
+                router.toast("Purchases restored")
+            } else {
+                router.toast("Nothing to restore on this Apple Account")
+            }
+        }
+    }
+
+    func manageSubscription() {
+        Task { [weak self] in await self?.purchases.showManageSubscriptions() }
     }
 
     func buyBoost(_ kind: BoostKind) {

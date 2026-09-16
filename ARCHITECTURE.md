@@ -42,7 +42,29 @@ Pacing is tuned for relaxed, minutes-long runs: cruising speed is 62% of the pro
 | `RunController` (`@Observable`) | Run lifecycle state machine: `attract → countdown → playing ⇄ paused → crashed → results`. Steps the simulation once per rendered frame, maps `RunEvent`s to audio/haptics, publishes a `HUDSnapshot`. The simulation itself is `@ObservationIgnored` so 60 Hz mutation never invalidates SwiftUI. |
 | `UIRouter` (`@Observable`) | Presentation only: active tab, bottom sheet, reward pop-up queue, ad request, toast, share image. |
 | `GameCoordinator` (`@Observable`) | Use-cases the views call: launch, revive, double coins, play again, shop/crate/pass/daily/duel actions. Orchestrates store + controller + router + ads + purchases. No SwiftUI imports. |
-| Services | `AudioService` (`SynthAudioService` on `AVAudioSourceNode`, plus an adaptive four-layer music sequencer), `HapticsService`, `AdService` (`MockAdService`), `PurchaseService` (`SimulatedPurchaseService`). Each is a protocol with a production and a silent implementation. |
+| Services | `AudioService` (`SynthAudioService` on `AVAudioSourceNode`, plus an adaptive four-layer music sequencer), `HapticsService`, `AdService` (`MockAdService`), `PurchaseService` (`StoreKitPurchaseService` in `live()`, `SimulatedPurchaseService` in `preview()`). Each is a protocol with a production and a silent implementation. |
+
+## Purchases
+
+Real-money products live in `StoreProduct` (StarlaneCore) — the catalog is the single source of truth for
+both the UI and the StoreKit product request, keyed by the App Store Connect product identifier.
+`StoreKitPurchaseService` owns everything StoreKit: it loads the catalog for localised prices, runs a
+`Transaction.updates` listener for the app's whole lifetime, and rebuilds entitlements from
+`Transaction.currentEntitlements`.
+
+Two rules keep the grant honest:
+
+1. A transaction is **only finished after the grant is persisted**. `onTransaction` returns `true` from the
+   coordinator once `PlayerStore` has saved, so a crash mid-grant means StoreKit replays it next launch.
+2. Consumable grants are **idempotent** — `ShopSystem.redeem(transactionID:)` remembers the last 200
+   transaction identifiers, so a replay never pays out twice.
+
+Entitlements flow the other way: `ShopSystem.sync(_:to:)` turns VIP and the non-consumables on *and off*,
+so a lapsed subscription or a refund removes the perk (including VIP's +2 energy cap, applied and removed
+symmetrically). `refresh()` re-reads entitlements on every foreground; `restore()` additionally calls
+`AppStore.sync()` and is only wired to the explicit Restore button.
+
+See `IAP.md` for the product identifiers and the App Store Connect setup.
 
 ## Rendering
 
@@ -82,11 +104,12 @@ weight plus drawn currency marks and a vector `RocketMark`.
   pass claims, duels, daily rollover/streaks, shop grants, run banking, persistence round-trip.
 - `StarlaneTests`: `RunController` state machine (countdown → crash → results → revive, pause/quit),
   `GameCoordinator` flows (launch gating, boosts, pulls, login, reward queue, rewarded ads, purchases,
-  settings, reset) and `PlayerStore` (ticks, offline regen, persistence, leaderboard).
+  settings, reset), `PlayerStore` (ticks, offline regen, persistence, leaderboard) and the StoreKit
+  storefront driven against `Starlane.storekit` with `SKTestSession`.
 
 ## Extending
 
-- **Real ads / IAP**: implement `AdService` / `PurchaseService` (StoreKit 2) and swap them in `AppEnvironment.live()`.
+- **Real ads**: implement `AdService` and swap it in `AppEnvironment.live()`.
 - **Cloud save**: implement `ProfileStore`.
 - **New obstacle patterns**: add a `Chunk` to `ChunkLibrary`.
 - **New biome**: add a `Biome` to `BiomeCatalog`; textures are generated automatically.

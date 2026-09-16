@@ -9,7 +9,8 @@ final class AppEnvironment {
         self.coordinator = coordinator
     }
 
-    /// Production wiring: JSON persistence, synthesised audio, system haptics, simulated ads and store.
+    /// Production wiring: JSON persistence, synthesised audio, system haptics, simulated ads and the real
+    /// StoreKit 2 storefront.
     static func live() -> AppEnvironment {
         let store: any ProfileStore = (try? FileProfileStore.standard()) ?? InMemoryProfileStore()
         let audio = SynthAudioService()
@@ -18,11 +19,11 @@ final class AppEnvironment {
         let run = RunController(audio: audio, haptics: haptics)
         let router = UIRouter()
         let coordinator = GameCoordinator(player: player, run: run, router: router, audio: audio, haptics: haptics,
-                                          ads: MockAdService(), purchases: SimulatedPurchaseService())
+                                          ads: MockAdService(), purchases: StoreKitPurchaseService())
         return AppEnvironment(coordinator: coordinator)
     }
 
-    /// Silent, in-memory wiring for previews and tests.
+    /// Silent, in-memory wiring for previews and tests. The storefront is simulated: nothing is charged.
     static func preview(profile: PlayerProfile = PlayerProfile()) -> AppEnvironment {
         let audio = SilentAudioService()
         let haptics = SilentHapticsService()

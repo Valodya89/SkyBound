@@ -1,0 +1,177 @@
+{
+  "appPolicies": {
+    "eula": "",
+    "policies": [
+      {
+        "locale": "en_US",
+        "policyText": "",
+        "policyURL": "https://ravosolutions.com/starlane/privacy"
+      }
+    ]
+  },
+  "identifier": "2c3dcb79-82a7-901f-f1ce-701c68139847",
+  "nonRenewingSubscriptions": [],
+  "products": [
+    {
+      "displayPrice": "1.99",
+      "familyShareable": false,
+      "internalID": "7301b4da-c457-9e58-0a3d-9f1b918c34bc",
+      "localizations": [
+        {
+          "description": "120 gems.",
+          "displayName": "Pouch of Gems",
+          "locale": "en_US"
+        }
+      ],
+      "productID": "com.ravo.skybound.gems.pouch",
+      "referenceName": "Pouch of Gems",
+      "type": "Consumable"
+    },
+    {
+      "displayPrice": "7.99",
+      "familyShareable": false,
+      "internalID": "0a0eedc3-b3b1-5e77-cde1-9fbce84f73eb",
+      "localizations": [
+        {
+          "description": "650 gems, including an 8% bonus.",
+          "displayName": "Chest of Gems",
+          "locale": "en_US"
+        }
+      ],
+      "productID": "com.ravo.skybound.gems.chest",
+      "referenceName": "Chest of Gems",
+      "type": "Consumable"
+    },
+    {
+      "displayPrice": "14.99",
+      "familyShareable": false,
+      "internalID": "a6938886-52fe-c521-b7eb-4a5a08eaeeea",
+      "localizations": [
+        {
+          "description": "1,450 gems, including a 20% bonus.",
+          "displayName": "Vault of Gems",
+          "locale": "en_US"
+        }
+      ],
+      "productID": "com.ravo.skybound.gems.vault",
+      "referenceName": "Vault of Gems",
+      "type": "Consumable"
+    },
+    {
+      "displayPrice": "39.99",
+      "familyShareable": false,
+      "internalID": "7a8c856c-c9fe-9cc1-bbb2-ccb66c53f3b7",
+      "localizations": [
+        {
+          "description": "4,000 gems, including a 34% bonus.",
+          "displayName": "Singularity Hoard",
+          "locale": "en_US"
+        }
+      ],
+      "productID": "com.ravo.skybound.gems.hoard",
+      "referenceName": "Singularity Hoard",
+      "type": "Consumable"
+    },
+    {
+      "displayPrice": "3.99",
+      "familyShareable": false,
+      "internalID": "04e3b797-43a2-5799-a4df-90f9627f803c",
+      "localizations": [
+        {
+          "description": "Smash it and collect every coin inside.",
+          "displayName": "Piggy Bank",
+          "locale": "en_US"
+        }
+      ],
+      "productID": "com.ravo.skybound.piggybank",
+      "referenceName": "Piggy Bank",
+      "type": "Consumable"
+    },
+    {
+      "displayPrice": "2.99",
+      "familyShareable": false,
+      "internalID": "37355c31-7060-3715-7de7-85ef9bffa49c",
+      "localizations": [
+        {
+          "description": "Permanently removes all interstitial ads.",
+          "displayName": "Remove Ads",
+          "locale": "en_US"
+        }
+      ],
+      "productID": "com.ravo.skybound.noads",
+      "referenceName": "Remove Ads",
+      "type": "NonConsumable"
+    },
+    {
+      "displayPrice": "5.99",
+      "familyShareable": false,
+      "internalID": "16467d7e-3b3d-cc88-8c08-1948c9142074",
+      "localizations": [
+        {
+          "description": "1,200 gems, a rocket skin and 3 boosts.",
+          "displayName": "Founder's Bundle",
+          "locale": "en_US"
+        }
+      ],
+      "productID": "com.ravo.skybound.bundle.founder",
+      "referenceName": "Founder's Bundle",
+      "type": "NonConsumable"
+    }
+  ],
+  "settings": {
+    "_askToBuyEnabled": false,
+    "_billingGracePeriodEnabled": false,
+    "_billingIssuesEnabled": false,
+    "_disableDialogs": false,
+    "_failTransactionsEnabled": false,
+    "_locale": "en_US",
+    "_renewalBillingIssuesEnabled": false,
+    "_storeKitErrors": [],
+    "_storefront": "USA",
+    "_timeRate": 0
+  },
+  "subscriptionGroups": [
+    {
+      "id": "8468b08a-800e-ca72-197a-a9ea174855f9",
+      "localizations": [],
+      "name": "Starlane VIP",
+      "subscriptions": [
+        {
+          "adHocOffers": [],
+          "billingPlans": [
+            {
+              "billingPlanType": "BILLED_UPFRONT",
+              "commitmentDisplayPrice": "6.99",
+              "displayPrice": "6.99",
+              "internalID": "70010001",
+              "isEnabled": true
+            }
+          ],
+          "codeOffers": [],
+          "displayPrice": "6.99",
+          "familyShareable": false,
+          "groupNumber": 1,
+          "internalID": "af5788f0-d736-7d30-5a67-451677506365",
+          "introductoryOffers": [],
+          "localizations": [
+            {
+              "description": "Double coins, +2 energy cap and no ads.",
+              "displayName": "VIP Pass",
+              "locale": "en_US"
+            }
+          ],
+          "productID": "com.ravo.skybound.vip.monthly",
+          "recurringSubscriptionPeriod": "P1M",
+          "referenceName": "VIP Pass Monthly",
+          "subscriptionGroupID": "8468b08a-800e-ca72-197a-a9ea174855f9",
+          "type": "RecurringSubscription",
+          "winbackOffers": []
+        }
+      ]
+    }
+  ],
+  "version": {
+    "major": 5,
+    "minor": 0
+  }
+}

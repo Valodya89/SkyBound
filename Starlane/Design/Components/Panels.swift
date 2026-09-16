@@ -141,7 +141,7 @@ struct RarityCorner: View {
     }
 }
 
-/// Outlined uppercase tag: BOSSES, 70% OFF, BEST VALUE.
+/// Outlined uppercase tag: BOSSES, BEST STARTER, BEST VALUE.
 struct Tag: View {
     let text: String
     var color: Color = Theme.flare

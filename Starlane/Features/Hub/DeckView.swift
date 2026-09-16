@@ -103,12 +103,12 @@ struct OfferTicket: View {
                 HStack(spacing: 12) {
                     LineIcon(name: "gift", size: 18, color: Theme.flare)
                     VStack(alignment: .leading, spacing: 3) {
-                        Text("Founder's Bundle").font(.body(12.5, weight: .bold)).foregroundStyle(Theme.text).lineLimit(1)
+                        Text(StoreProduct.founderBundle.name).font(.body(12.5, weight: .bold)).foregroundStyle(Theme.text).lineLimit(1)
                         Text("1,200 gems · Gilded Comet · 3 boosts").font(.body(11)).foregroundStyle(Theme.muted).lineLimit(1).minimumScaleFactor(0.8)
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     VStack(alignment: .trailing, spacing: 2) {
-                        Text("$5.99").display(18, color: Theme.gold)
+                        Text(coordinator.priceAmount(for: .founderBundle)).display(18, color: Theme.gold)
                         Text("\(GameFormat.clock(coordinator.player.offerSecondsLeft)) left").capsLabel(9, color: Theme.faint).monospacedDigit()
                     }
                     .padding(.leading, 12)

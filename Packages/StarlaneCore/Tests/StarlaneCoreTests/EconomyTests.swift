@@ -245,6 +245,79 @@ struct ShopTests {
         #expect(p.maxEnergy == 7)
     }
 
+    @Test("A lapsed VIP subscription gives the energy cap back")
+    func vipLapseReturnsCap() {
+        var p = PlayerProfile()
+        #expect(EnergySystem.raiseCap(&p) == false)  // no gems yet
+        p.gems = 400
+        #expect(EnergySystem.raiseCap(&p))
+        let boughtCap = p.maxEnergy
+        ShopSystem.setVIP(true, profile: &p, expires: Date(timeIntervalSince1970: 1_800_000_000))
+        #expect(p.maxEnergy == boughtCap + ShopSystem.vipEnergyBonus)
+        #expect(p.vipExpiresAt == 1_800_000_000)
+        ShopSystem.setVIP(false, profile: &p)
+        #expect(!p.isVIP)
+        #expect(p.maxEnergy == boughtCap)
+        #expect(p.energy <= p.maxEnergy)
+        #expect(p.vipExpiresAt == nil)
+    }
+
+    @Test("Turning VIP on twice does not stack the energy bonus")
+    func vipIsIdempotent() {
+        var p = PlayerProfile()
+        ShopSystem.setVIP(true, profile: &p)
+        ShopSystem.setVIP(true, profile: &p)
+        #expect(p.maxEnergy == 5 + ShopSystem.vipEnergyBonus)
+    }
+
+    @Test("Syncing App Store entitlements revokes what the player no longer owns")
+    func entitlementSync() {
+        var p = PlayerProfile()
+        _ = ShopSystem.apply(.vip, to: &p)
+        _ = ShopSystem.apply(.removeAds, to: &p)
+        _ = ShopSystem.apply(.founderBundle, to: &p)
+        let gems = p.gems
+
+        ShopSystem.sync(StoreEntitlements(isVIP: true, adsRemoved: true, founderBundleOwned: true), to: &p)
+        #expect(p.isVIP && p.adsRemoved && p.founderBundleOwned)
+
+        // Subscription lapsed and the bundle was refunded; the gems already spent are not clawed back.
+        ShopSystem.sync(StoreEntitlements(), to: &p)
+        #expect(!p.isVIP)
+        #expect(!p.adsRemoved)
+        #expect(!p.founderBundleOwned)
+        #expect(p.maxEnergy == 5)
+        #expect(p.gems == gems)
+    }
+
+    @Test("A transaction identifier is only ever granted once")
+    func redeemIsIdempotent() {
+        var p = PlayerProfile()
+        #expect(ShopSystem.redeem(transactionID: "tx-1", profile: &p))
+        #expect(!ShopSystem.redeem(transactionID: "tx-1", profile: &p))
+        #expect(ShopSystem.redeem(transactionID: "tx-2", profile: &p))
+        // The history stays bounded and keeps the newest identifiers.
+        for i in 0..<(ShopSystem.redeemedHistoryLimit + 50) {
+            _ = ShopSystem.redeem(transactionID: "bulk-\(i)", profile: &p)
+        }
+        #expect(p.redeemedTransactionIDs.count == ShopSystem.redeemedHistoryLimit)
+        #expect(p.redeemedTransactionIDs.last == "bulk-\(ShopSystem.redeemedHistoryLimit + 49)")
+        #expect(!p.redeemedTransactionIDs.contains("tx-1"))
+    }
+
+    @Test("Every product identifier is unique, prefixed and resolvable")
+    func catalogIdentifiers() {
+        let ids = StoreProduct.allIDs
+        #expect(ids.count == 8)
+        #expect(Set(ids).count == ids.count)
+        #expect(ids.allSatisfy { $0.hasPrefix(StoreProduct.idPrefix) })
+        #expect(ids.allSatisfy { StoreProduct.product(id: $0) != nil })
+        #expect(StoreProduct.product(id: "nope") == nil)
+        #expect(StoreProduct.vip.kind == .autoRenewable)
+        #expect(StoreProduct.removeAds.kind == .nonConsumable)
+        #expect(StoreProduct.gemPacks.allSatisfy { $0.kind == .consumable })
+    }
+
     @Test func upgradesCostMore() {
         var p = PlayerProfile()
         p.coins = 10_000

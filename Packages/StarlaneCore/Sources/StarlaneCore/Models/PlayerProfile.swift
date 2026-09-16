@@ -60,16 +60,21 @@ public struct PlayerProfile: Sendable, Hashable, Codable {
     public var equippedSkinID = SkinCatalog.defaultSkinID
     public var ghosts: [GameMode: [GhostSample]] = [:]
 
-    // Monetisation state (all simulated)
+    // Monetisation state
     public var pityCounter = 0
     public var passXP = 0
     public var passPremium = false
     public var claimedFreeTiers: Set<Int> = []
     public var claimedPremiumTiers: Set<Int> = []
     public var isVIP = false
+    /// Unix time the VIP subscription renews or lapses, as reported by StoreKit. `nil` when not subscribed.
+    public var vipExpiresAt: Double?
     public var adsRemoved = false
     public var founderBundleOwned = false
     public var interstitialCounter = 0
+    /// Transaction identifiers already granted, so a consumable is never handed out twice when a
+    /// transaction could not be finished on a previous launch. Trimmed to the newest entries.
+    public var redeemedTransactionIDs: [String] = []
 
     // Daily state
     public var loginStreakDay = 1
@@ -126,9 +131,11 @@ public struct PlayerProfile: Sendable, Hashable, Codable {
         claimedFreeTiers = try c.decodeIfPresent(Set<Int>.self, forKey: .claimedFreeTiers) ?? d.claimedFreeTiers
         claimedPremiumTiers = try c.decodeIfPresent(Set<Int>.self, forKey: .claimedPremiumTiers) ?? d.claimedPremiumTiers
         isVIP = try c.decodeIfPresent(Bool.self, forKey: .isVIP) ?? d.isVIP
+        vipExpiresAt = try c.decodeIfPresent(Double.self, forKey: .vipExpiresAt) ?? d.vipExpiresAt
         adsRemoved = try c.decodeIfPresent(Bool.self, forKey: .adsRemoved) ?? d.adsRemoved
         founderBundleOwned = try c.decodeIfPresent(Bool.self, forKey: .founderBundleOwned) ?? d.founderBundleOwned
         interstitialCounter = try c.decodeIfPresent(Int.self, forKey: .interstitialCounter) ?? d.interstitialCounter
+        redeemedTransactionIDs = try c.decodeIfPresent([String].self, forKey: .redeemedTransactionIDs) ?? d.redeemedTransactionIDs
         loginStreakDay = try c.decodeIfPresent(Int.self, forKey: .loginStreakDay) ?? d.loginStreakDay
         loginClaimedToday = try c.decodeIfPresent(Bool.self, forKey: .loginClaimedToday) ?? d.loginClaimedToday
         wheelSpunToday = try c.decodeIfPresent(Bool.self, forKey: .wheelSpunToday) ?? d.wheelSpunToday
@@ -155,6 +162,8 @@ public struct PlayerProfile: Sendable, Hashable, Codable {
     public var hasOpenDuel: Bool { duels.contains { $0.status == .open } }
     public var hasClaimableMission: Bool { missions.contains { $0.canClaim } }
     public var isEnergyFull: Bool { energy >= maxEnergy }
+    /// Date the VIP subscription next renews, for the shop's "renews on …" line.
+    public var vipRenewalDate: Date? { vipExpiresAt.map { Date(timeIntervalSince1970: $0) } }
 
     public func balance(_ currency: Currency) -> Int {
         switch currency {

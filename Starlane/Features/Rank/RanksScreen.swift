@@ -41,6 +41,11 @@ private struct WeeklySection: View {
         }
         .padding(.horizontal, 2).padding(.bottom, 4)
         LeaderboardList(rows: rows)
+        // The board is generated on-device; saying so where it is shown avoids implying real opponents.
+        Text("Offline board — rivals are generated on this device, not real players.")
+            .font(.body(11)).foregroundStyle(Theme.faint)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.horizontal, 2).padding(.top, 6)
     }
 }
 
@@ -51,7 +56,7 @@ private struct DuelsSection: View {
         let p = coordinator.player.profile
         let open = p.duels.filter { $0.status == .open }
         let past = Array(p.duels.filter { $0.status != .open }.suffix(4))
-        Text("Async score battles. \(Duel.attempts) attempts to beat their run.")
+        Text("Offline score battles against generated rivals. \(Duel.attempts) attempts to beat their run.")
             .font(.body(12.5)).foregroundStyle(Theme.muted)
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal, 2).padding(.bottom, 4)

@@ -186,7 +186,7 @@ struct GameCoordinatorTests {
         #expect(c.player.profile.freeGemAdsWatchedToday == 1)
     }
 
-    @Test("Simulated purchase grants the product")
+    @Test("A verified transaction grants the product and shows the reward")
     func purchase() async throws {
         let c = make()
         c.purchase(.vip)
@@ -194,6 +194,50 @@ struct GameCoordinatorTests {
         #expect(c.player.profile.isVIP)
         #expect(c.player.profile.maxEnergy == 7)
         #expect(c.router.reward?.title == "VIP ACTIVATED")
+        #expect(c.player.profile.redeemedTransactionIDs.count == 1)
+    }
+
+    @Test("A replayed transaction never grants twice")
+    func replayedTransactionIsIgnored() async throws {
+        let c = make()
+        let store = c.purchases as! SimulatedPurchaseService
+        let pack = StoreProduct.gemPacks[0]
+        let info = StoreTransactionInfo(product: pack, transactionID: "tx-42", isRestore: false)
+        #expect(store.onTransaction?(info) == true)
+        #expect(c.player.profile.gems == 20 + 120)
+        // StoreKit replays a transaction that could not be finished last time.
+        #expect(store.onTransaction?(info) == true)
+        #expect(c.player.profile.gems == 20 + 120)
+    }
+
+    @Test("Entitlements arriving from the App Store revoke a lapsed VIP")
+    func entitlementsRevokeVIP() async throws {
+        let c = make()
+        c.purchase(.vip)
+        try await Task.sleep(for: .milliseconds(600))
+        #expect(c.player.profile.isVIP)
+
+        let store = c.purchases as! SimulatedPurchaseService
+        store.onEntitlements?(StoreEntitlements())
+        #expect(!c.player.profile.isVIP)
+        #expect(c.player.profile.maxEnergy == 5)
+        #expect(c.router.toast != nil)
+    }
+
+    @Test("Restoring a purchase does not replay the reward popup")
+    func restoreIsQuiet() {
+        let c = make()
+        let store = c.purchases as! SimulatedPurchaseService
+        let info = StoreTransactionInfo(product: .removeAds, transactionID: "tx-restore", isRestore: true)
+        #expect(store.onTransaction?(info) == true)
+        #expect(c.player.profile.adsRemoved)
+        #expect(c.router.reward == nil)
+    }
+
+    @Test("Prices fall back to the catalog label until StoreKit answers")
+    func priceLabels() {
+        let c = make()
+        #expect(c.priceLabel(for: .removeAds) == StoreProduct.removeAds.priceLabel)
     }
 
     @Test("Settings sync to services")
