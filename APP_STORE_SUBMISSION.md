@@ -4,9 +4,13 @@ Everything needed to take this repository to a live App Store listing: the app r
 metadata copy ready to paste, the privacy and age-rating answers, the eight in-app purchases, the
 review notes, the build commands, and the things that are still broken.
 
-Verified against the working tree on 16 Sep 2026 (`main`, commit `9221a95`) by building a Release
-archive and reading the resulting `Starlane.app`. Anything marked **verified** was read out of that
-bundle, not out of a source file.
+Verified against the working tree on **17 Sep 2026** by building a clean Release archive and reading
+the resulting `Starlane.app`. Anything marked **verified** was read out of that bundle, not out of a
+source file.
+
+> This revision covers the AdMob integration that landed after the first pass. Advertising changes
+> the App Privacy label, the age rating and the store description, so those sections were rewritten
+> rather than amended — see §6, §7 and §4.
 
 ---
 
@@ -21,72 +25,105 @@ bundle, not out of a source file.
 | Build (`CFBundleVersion`) | **1** | verified |
 | Minimum OS | **iOS 17.0** | verified `MinimumOSVersion` |
 | Device family | **iPhone only (`UIDeviceFamily = [1]`)** | verified |
+| Other platforms | **All off** — no iPad, Mac, Vision Pro or watchOS | verified, see §2 |
 | Orientation | Portrait only, `UIRequiresFullScreen = true` | verified |
 | Appearance | Forced dark (`UIUserInterfaceStyle = Dark`) | verified |
 | App Store category | Games (`public.app-category.games`) | verified `LSApplicationCategoryType` |
 | Export compliance | `ITSAppUsesNonExemptEncryption = false` | verified |
 | Privacy manifest | `PrivacyInfo.xcprivacy` present in the `.app` | verified |
-| Uncompressed app size | ~4.2 MB | verified |
-| Networking | **None.** No `URLSession`, no `Network`, no GameKit, no analytics, no ad SDK | grepped whole tree |
+| Uncompressed app size | ~7.5 MB | verified (was 4.2 MB before the ad SDKs) |
+| AdMob app ID | `ca-app-pub-9054557293639529~8799879891` | verified `GADApplicationIdentifier` in the archive |
+| Ad units | All six live (4 rewarded, 2 interstitial) | `AdUnits.swift` — no placeholders left |
+| SKAdNetwork IDs | 50 | verified `SKAdNetworkItems` |
+| Tracking | **Yes** — IDFA via AdMob, behind ATT | `NSUserTrackingUsageDescription` present; `NSPrivacyTracking = true` |
+| Networking | The game is offline; **the ad SDKs are not**. No `URLSession` or analytics of our own, no GameKit | grepped whole tree |
 | Localizations | English (U.S.) only — no string catalog exists | repo |
-| Bundled third-party content | Two SIL OFL fonts, licence files shipped in the bundle | verified (`OFL-*.txt` in `.app`) |
+| Embedded frameworks | `GoogleMobileAds.framework`, `UserMessagingPlatform.framework` | verified in `.app/Frameworks` |
+| Bundled third-party content | Two SIL OFL fonts (licences shipped), plus the two Google SDKs above | verified in the `.app` |
 
 ---
 
 ## 2. Where this stands
 
-Six blockers were identified on the first pass. **Four are now fixed in the repository**; the two
-that remain are account-side actions on App Store Connect that cannot be done from the codebase.
+Everything that can be fixed in the codebase is fixed and verified in a clean Release archive. What
+remains is account-side work in App Store Connect and AdMob.
 
-### Fixed — verified in a clean Release archive
+### Fixed and verified
 
-| # | Was | Now |
-|---|---|---|
-| 2 | `NSPhotoLibraryAddUsageDescription` missing, so tapping **Save Image** in the run-card share sheet terminated the app | Key added to `Starlane/Info.plist` **and** to `project.yml`. Verified present in the archived `Info.plist`. |
-| 3 | Archived as universal iPhone + iPad (`UIDeviceFamily = [1, 2]`) against a portrait-only design never tested on iPad | **iPhone-only.** `TARGETED_DEVICE_FAMILY = 1` on every config; verified `UIDeviceFamily = [1]` in the archive. No iPad screenshots needed, no iPad review. App size fell from 6.0 MB to 4.2 MB. |
-| 4 | `project.yml` had `DEVELOPMENT_TEAM: ""` and `TARGETED_DEVICE_FAMILY: "1"`, so `xcodegen generate` would wipe the signing team and flip the device family | `project.yml` now carries the real team `X3VVWK6698` and matches the project file on every setting that mattered. The committed project file was aligned to what the spec produces, so regenerating should be a no-op. |
-| — | `CODE_SIGN_IDENTITY = "iPhone Developer"` (deprecated identity name) on the app target | Removed; `CODE_SIGN_STYLE = Automatic` now governs signing unambiguously. |
-| — | `AppIcon-1024.png` carried an alpha channel (fully opaque, but a possible **ITMS-90717**) | `Scripts/render-app-icon.swift` now renders into an opaque `noneSkipLast` context; the icon was regenerated and is 8-bit RGB with no alpha. Visually identical. |
-| — | Stale empty `SkyBound.xcodeproj/` beside the real project | Deleted and removed from git. |
-
-> `xcodegen` is not installed on this machine, so the regeneration in row 4 was fixed in the spec but
-> not empirically re-run. Install it and run `xcodegen generate` once to confirm the diff is clean
-> before you rely on it.
-
-**Verification after the changes:** clean Release archive succeeded with 0 errors, and the full suite
-passes — 70 core tests in 15 suites plus 23 app-layer tests in 3 suites, 93 in total.
-
-### 1. Publish the website — needs a push and three clicks
-
-The Privacy Policy and Support pages are written (`docs/`) and the app's hardcoded link already
-points at them ([ShopScreen.swift:113](Starlane/Features/Shop/ShopScreen.swift:113),
-`Starlane.storekit`, verified compiled into the binary). They are **not live until you enable GitHub
-Pages** — see [WEBSITE.md](WEBSITE.md).
-
-| Page | URL once Pages is on |
+| Was | Now |
 |---|---|
-| Privacy Policy | `https://valodya89.github.io/SkyBound/privacy/` |
-| Support | `https://valodya89.github.io/SkyBound/support/` |
+| Privacy Policy and Support URLs pointed at a domain that did not exist | Site written and **live on Netlify**; all three URLs return 200, and the privacy URL is compiled into the binary |
+| `NSPhotoLibraryAddUsageDescription` missing — **Save Image** in the run-card share sheet terminated the app | Key present in `Info.plist` and `project.yml`; verified in the archive |
+| Archived as universal iPhone + iPad against a portrait-only design never tested on iPad | **iPhone-only**, `UIDeviceFamily = [1]` verified. Dropped the archive from 9.4 MB to 7.5 MB. **This regressed once — see the warning below.** |
+| `project.yml` had an empty `DEVELOPMENT_TEAM`, so `xcodegen generate` wiped signing | Real team `X3VVWK6698` in the spec |
+| `CODE_SIGN_IDENTITY = "iPhone Developer"` (deprecated) | Removed; automatic signing governs |
+| `AppIcon-1024.png` carried an alpha channel (possible **ITMS-90717**) | `render-app-icon.swift` renders into an opaque context; icon regenerated, 8-bit RGB, visually identical |
+| Stale empty `SkyBound.xcodeproj/` | Deleted |
+| The app would have shipped to Apple Silicon Macs and Vision Pro. `SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD` and `SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD` were unset, and **both default to YES** | Both set to `NO`, with `SUPPORTS_MACCATALYST: NO` and `SUPPORTED_PLATFORMS: "iphoneos iphonesimulator"`. Verified in resolved build settings and in the archive |
+| AdMob app ID and all six ad units were `REPLACE_ME` placeholders | All real. App ID verified in the archived `Info.plist`; units cross-checked against the same publisher ID |
+| `app-ads.txt` could never be found from a GitHub project page | Written at `docs/app-ads.txt` with the real publisher ID; serves from the domain root once you redeploy |
 
-Two things before you submit:
+> ### ⚠ The iPhone-only setting regressed once, and can again
+>
+> `project.yml` correctly declares `TARGETED_DEVICE_FAMILY: "1"`, but the committed
+> `project.pbxproj` was rewritten at 00:17 — almost certainly by Xcode writing back its defaults when
+> the Google SPM packages were added — and it re-added a target-level `"1,2"`. The archive silently
+> went universal again.
+>
+> It is fixed again and verified. **Re-check the platform gates before every upload** — any trip
+> through the Xcode UI that touches target settings can reintroduce Apple's defaults:
+>
+> ```bash
+> xcodebuild -project Starlane.xcodeproj -target Starlane -configuration Release -showBuildSettings \
+>   | grep -E "TARGETED_DEVICE_FAMILY|SUPPORTS_MACCATALYST|SUPPORTS_MAC_DESIGNED|SUPPORTS_XR_DESIGNED|SUPPORTED_PLATFORMS"
+> ```
+>
+> Expect exactly this:
+>
+> ```
+> SUPPORTED_PLATFORMS = iphoneos iphonesimulator
+> SUPPORTS_MACCATALYST = NO
+> SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO
+> SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO
+> TARGETED_DEVICE_FAMILY = 1
+> ```
+>
+> And in the archive, `UIDeviceFamily` must be `Array { 1 }`:
+>
+> ```bash
+> /usr/libexec/PlistBuddy -c "Print :UIDeviceFamily" <archive>/Products/Applications/Starlane.app/Info.plist
+> ```
+>
+> A `2` means iPad screenshots and an iPad review. A `YES` on either "Designed for" setting means the
+> App Store offers the app on Macs or Vision Pro, where a portrait-locked swipe game has never been
+> tested.
 
-1. Push `docs/`, enable Pages (Settings ▸ Pages ▸ Deploy from a branch ▸ `main` / `/docs`), and
-   confirm both URLs load. A dead privacy link is a routine rejection, and the in-app link sits on
-   the shop screen the reviewer will definitely open.
-2. Replace the placeholder `you@example.com` in both pages with a real inbox. Apple requires a
-   working contact.
+**Verification run:** clean Release archive, 0 errors, `** ARCHIVE SUCCEEDED **`. Both Google SDK
+privacy manifests present alongside the app's own. Full test suite green.
 
-### 2. Paid Applications Agreement must be active
+### Remaining — App Store Connect
 
-App Store Connect ▸ Business: the Paid Applications Agreement signed, banking and tax complete.
-Until it is, **no product loads at all** — not in production, not in TestFlight. The shop renders
-with every item missing and the app logs `[Store] products missing from App Store Connect: …`.
+**1. Paid Applications Agreement.** Under Business: agreement signed, banking and tax complete.
+Until it is, **no product loads at all**, in production or TestFlight — the shop renders empty and
+the app logs `[Store] products missing from App Store Connect: …`.
 
-### 3. The eight in-app purchases must be created and attached to this first build
+**2. Create the eight in-app purchases and attach them to build 1.** New IAPs must be submitted
+*with* a build the first time (§8). Skip this and they sit in "Ready to Submit" forever while
+reviewers see an empty shop.
 
-New IAPs must be submitted *with* a build the first time. Create all eight (§8), then attach them to
-build 1 in the version page's **In-App Purchases** section. Skip this and they sit in "Ready to
-Submit" forever and the shop is empty for reviewers.
+### Remaining — AdMob
+
+These are account settings, not code. `ADMOB.md` has the full list; the ones that block or distort
+review:
+
+| Where | Why it matters |
+|---|---|
+| **Privacy & messaging ▸ European regulations** | Publish a GDPR consent message. Without it `ConsentInformation` reports ads cannot be requested in the EEA/UK, and those players see **no ads at all** |
+| **Privacy & messaging ▸ ATT** | Create the IDFA explainer that precedes Apple's prompt |
+| **Blocking controls ▸ Ad content rating** | Cap at G or PG to match the App Store rating. The app requests `parentalGuidance` per call, but the account-level cap is what binds |
+| **App settings ▸ COPPA / target audience** | Mark as **not** directed at children — accurate here, and tagging otherwise kills personalised demand |
+| **Payments** | Address verification by post, then tax and payment details. Earnings are withheld until all three are done |
+| **app-ads.txt** | Redeploy the site so `/app-ads.txt` is served, then let AdMob verify it |
 
 ## 3. Creating the app record
 
@@ -175,16 +212,18 @@ SEASON 1 · SKYWARD
 Twenty tiers, a free track and a premium track, and daily missions that feed both.
 
 MADE FOR ONE HAND
-Portrait. Offline. No account, no sign-in, no tracking. Every sound in the game is synthesised live on your device — there is not a single audio file in the download.
+Portrait, one thumb, no account and no sign-in. The game itself plays offline. Every sound is synthesised live on your device — there is not a single audio file in the download.
 
 —
 
-Starlane is free to play. Coins, gems, crates, weekly ranks, duels and the ad breaks are all simulated on your device: the leaderboard rivals are generated locally, not real players. Gem packs, the Founder's Bundle, Remove Ads, the Piggy Bank and the VIP Pass are real purchases made through the App Store.
+Starlane is free to play, paid for by ads. Full-screen breaks appear between runs, and the rewarded videos are always your choice — watch one for a revive, doubled coins, gems or a wheel spin. Remove Ads and the VIP Pass both take the breaks away for good.
+
+Coins, gems, crates, weekly ranks and duels are simulated on your device: the leaderboard rivals are generated locally, not real players. Gem packs, the Founder's Bundle, Remove Ads, the Piggy Bank and the VIP Pass are real purchases made through the App Store.
 
 VIP Pass is an auto-renewable subscription at $6.99 per month, billed to your Apple Account. It grants double coins on every run, +2 energy capacity and no interstitials. It renews automatically unless cancelled at least 24 hours before the end of the current period; manage or cancel it in Settings › Apple Account › Subscriptions.
 
 Terms of Use: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
-Privacy Policy: https://valodya89.github.io/SkyBound/privacy/
+Privacy Policy: https://ravo-starlane.netlify.app/privacy/
 
 The concept, engine, obstacle patterns, interface and copy were generated by Claude, an AI assistant made by Anthropic.
 ```
@@ -203,9 +242,9 @@ First flight. Six sectors, five modes, a seeded Daily Challenge, Season 1 · Sky
 
 | Field | Value | Status |
 |---|---|---|
-| Support URL | `https://valodya89.github.io/SkyBound/support/` | Page written — **enable GitHub Pages** |
-| Marketing URL | optional — leave blank for 1.0 | — |
-| Privacy Policy URL | `https://valodya89.github.io/SkyBound/privacy/` | Page written — **enable GitHub Pages**. Already matches the URL hardcoded in the app |
+| Support URL | `https://ravo-starlane.netlify.app/support/` | **Live** — verified 200 |
+| Marketing URL | `https://ravo-starlane.netlify.app/` | **Live** — verified 200 |
+| Privacy Policy URL | `https://ravo-starlane.netlify.app/privacy/` | **Live** — verified 200, and matches the URL compiled into the binary |
 
 ### Copyright
 
@@ -250,19 +289,35 @@ An App Preview video is optional and not worth blocking 1.0 on.
 
 ## 6. App Privacy
 
-Answer the App Privacy questionnaire as **"Data Not Collected"** — for every category, no exceptions.
+The app itself still collects nothing — no back end, no analytics, no crash reporter, and the player
+profile is a local JSON file in Application Support. **But the Google Mobile Ads SDK does collect**,
+and Apple's questionnaire covers everything in the binary, not just your own code. Answering "Data
+Not Collected" with AdMob linked is a rejection, and a false privacy label besides.
 
-This is accurate and provable: there is no networking code in the entire tree, no analytics SDK, no
-ad SDK, no crash reporter, and the player profile is a local JSON file in Application Support.
-Purchases are handled by StoreKit, which is Apple's own collection, not yours.
+Declare the categories below. They come from the SDK's own privacy manifest inside
+`GoogleMobileAds.xcframework`; Google's
+[data disclosure page](https://developers.google.com/admob/ios/privacy/data-disclosure) is the
+authority if it changes.
 
-It also matches `Starlane/Resources/PrivacyInfo.xcprivacy` exactly, which declares:
+| Category | Collected | Linked to identity | Used for tracking | Purpose |
+|---|---|---|---|---|
+| Device ID (advertising identifier) | Yes | Yes | **Yes** | Third-party advertising |
+| Advertising Data | Yes | Yes | No | Third-party advertising, analytics |
+| Product Interaction | Yes | Yes | No | Third-party advertising, analytics |
+| Coarse Location | Yes | Yes | No | Third-party advertising, analytics |
+| Crash Data, Performance Data, Other Diagnostic Data | Yes | No | No | Analytics, advertising |
+
+Because Device ID is used for tracking, the label carries a **"Data Used to Track You"** section and
+the app must show the ATT prompt — which it does, after the consent form, from
+`UMPConsentService.gather()`.
+
+`Starlane/Resources/PrivacyInfo.xcprivacy` now declares:
 
 | Key | Value |
 |---|---|
-| `NSPrivacyTracking` | `false` |
-| `NSPrivacyTrackingDomains` | empty |
-| `NSPrivacyCollectedDataTypes` | empty |
+| `NSPrivacyTracking` | `true` |
+| `NSPrivacyTrackingDomains` | empty — see the comment in the file; Google publishes no list, and a listed domain is hard-blocked by iOS under an ATT denial |
+| `NSPrivacyCollectedDataTypes` | empty — the app collects nothing of its own; Xcode merges the SDK's manifest into the privacy report |
 | `NSPrivacyAccessedAPITypes` | `NSPrivacyAccessedAPICategoryUserDefaults`, reason `CA92.1` |
 
 That `UserDefaults` declaration is what keeps the upload from failing with **ITMS-91053 — Missing
@@ -289,7 +344,7 @@ Apple's questionnaire wording changes periodically; the substance to answer is b
 | Simulated gambling | **None** — see the note below | |
 | Unrestricted web access | None | No web view, no external browser except the two legal links. |
 | User-generated content / chat | None | No text entry anywhere in the app. |
-| Third-party advertising | **No** | The "ads" are a local placeholder view labelled "Simulated ad"; no ad network is linked. Flag this in the review notes so it does not read as a dodge. |
+| Third-party advertising | **Yes** | Google AdMob: interstitials between runs and opt-in rewarded videos. Ad content is capped at `parentalGuidance` in `GoogleAdService.start()`; keep the AdMob blocking controls in step with whatever rating this questionnaire produces. |
 | In-app purchases | **Yes** | |
 
 Expected outcome: **4+**, or 9+ if you answer mild cartoon violence.
@@ -357,11 +412,11 @@ scheme's Run action.
 ### Notes for the reviewer
 
 ```
-Starlane is a single-player arcade runner. It works fully offline — there is no networking code in the app at all, no account, and no analytics or advertising SDK.
+Starlane is a single-player arcade runner. Gameplay works offline; there is no account and no analytics. The only network use is the App Store (prices and purchases) and Google AdMob, which serves the ads.
 
 Three things that could otherwise look wrong:
 
-1. "Ads". The ad breaks and the rewarded-video buttons are a local placeholder screen, labelled "Simulated ad" on screen. No ad network is integrated and nothing is downloaded or installed. The Remove Ads product removes these placeholder breaks.
+1. Ads. Full-screen interstitials appear between runs, at most every other transition and never within 75 seconds of another ad. The "watch a video" buttons on the results, Supply and Daily screens are opt-in rewarded ads, and the reward is only granted when Google reports the video was watched to the reward point. The Remove Ads product and the VIP Pass both remove the interstitials permanently; the rewarded videos remain available because they are always the player's choice. Consent is collected through Google's UMP form where it is required, and the ATT prompt follows it; Settings has an "Ad privacy options" row wherever the consent form applies.
 
 2. Leaderboards and duels. The weekly ranking and the duel opponents are generated on the device. The app states this on the Ranks screen ("Offline board — rivals are generated on this device, not real players.") so it is not presented as real competition.
 
@@ -426,16 +481,24 @@ API, and put the `.p8` in `~/.appstoreconnect/private_keys/`.)
 
 ### Verified build state
 
-A **clean** Release archive was produced from the current tree after every fix above:
-`** ARCHIVE SUCCEEDED **`, 0 errors, no `actool` icon warnings, 4.2 MB app. Confirmed in the
-resulting `Starlane.app`:
+A **clean** Release archive was produced from the current tree, with the ad SDKs linked:
+`** ARCHIVE SUCCEEDED **`, 0 errors, no `actool` icon warnings, **7.5 MB** app. Confirmed by reading
+the resulting `Starlane.app`:
 
-- `UIDeviceFamily = [1]` — iPhone only
-- `NSPhotoLibraryAddUsageDescription` present
-- `PrivacyInfo.xcprivacy` present in the payload
-- `https://valodya89.github.io/SkyBound/privacy/` compiled into the binary
+| Check | Result |
+|---|---|
+| `UIDeviceFamily` | `[1]` — iPhone only (**re-check this every upload**, see §2) |
+| `GADApplicationIdentifier` | `ca-app-pub-9054557293639529~8799879891` |
+| `SKAdNetworkItems` | 50 entries |
+| `NSUserTrackingUsageDescription` | present |
+| `NSPhotoLibraryAddUsageDescription` | present |
+| Privacy manifests | the app's own, plus `GoogleMobileAds.framework` and `UserMessagingPlatform.framework` |
+| Embedded frameworks | `GoogleMobileAds`, `UserMessagingPlatform` |
+| Privacy URL in the binary | `https://ravo-starlane.netlify.app/privacy/` — returns 200 live |
 
-The full test suite passes: 93 tests (70 core in 15 suites, 23 app-layer in 3 suites).
+The full test suite passes: **95 tests** — 70 core in 15 suites, 25 app-layer in 3 suites. (The test
+log contains two `CoreTelephony` connection errors; those are simulator noise from the ad SDK, not
+failures.)
 
 That archive used `CODE_SIGNING_ALLOWED=NO`, so **signing is the one part of the archive path not yet
 exercised end to end.** Your first real Archive from Xcode will be the first time the team ID and
@@ -443,7 +506,7 @@ provisioning profile are used together.
 
 `actool` still writes an `AppIcon76x76@2x~ipad.png` and a `CFBundleIcons~ipad` key into the bundle.
 That is an artefact of the single-size 1024 icon format and is inert — `UIDeviceFamily` is what
-determines device compatibility and iPad screenshot requirements, and it is `[1]`.
+determines device compatibility and iPad screenshot requirements.
 
 ### Tests
 
@@ -453,7 +516,9 @@ xcodebuild -project Starlane.xcodeproj -scheme Starlane -destination 'platform=i
 
 ---
 
-## 11. Testing purchases before you ship
+## 11. Testing before you ship
+
+### Purchases
 
 - **Simulator:** just run. The scheme points at `Starlane.storekit`, so all eight products load with
   no App Store Connect involvement. Use Debug ▸ StoreKit ▸ Manage Transactions to refund a purchase,
@@ -471,45 +536,80 @@ What the app already does correctly, so you know what to watch for: transactions
 `ShopSystem.redeem(transactionID:)`; entitlements are re-read on every foreground; and a lapsed or
 refunded VIP removes the perk symmetrically.
 
+### Ads
+
+Debug builds always use Google's public **test** ad units — `AdUnits.unitID(for:)` switches on
+`#if DEBUG`. This is deliberate and must stay that way: requesting, let alone tapping, a live ad from
+a development build is invalid traffic and gets the AdMob account suspended.
+
+Before shipping, confirm on a real device:
+
+- [ ] The UMP consent form appears where required. Outside the EEA/UK, set `debug.geography = .EEA`
+      in `UMPConsentService` and add your device to `AdUnits.testDeviceIdentifiers` to rehearse it.
+- [ ] The ATT prompt follows the consent form, not before it.
+- [ ] Declining ATT still yields ads — non-personalised ones — rather than no ads.
+- [ ] A rewarded video grants its reward **only** when watched to the reward point; closing early
+      grants nothing.
+- [ ] An interstitial appears between runs, and not twice inside 75 seconds.
+- [ ] Buying Remove Ads, or holding VIP, stops the interstitials while leaving rewarded videos.
+- [ ] **Settings ▸ Ad privacy options** appears where the consent form applies, and reopens it.
+
+A release build with no fill shows no ad and the game continues — `GoogleAdService` treats every
+failure as "nothing to show" rather than blocking play. That makes a misconfigured account look like
+a quiet game rather than a crash, so verify fill explicitly rather than assuming it.
+
 ---
 
 ## 12. Pre-submission checklist
 
 **Verified in the built product — nothing to do**
 
-- [x] Release archive builds with zero errors
-- [x] `PrivacyInfo.xcprivacy` present in the payload, declaring `UserDefaults` / `CA92.1`
+- [x] Clean Release archive, zero errors
+- [x] All three website URLs live and returning 200; privacy URL matches the one in the binary
+- [x] AdMob app ID and all six ad units real, cross-checked against one publisher ID
+- [x] `app-ads.txt` written with the real publisher ID
+- [x] Three privacy manifests in the payload (app + both Google SDKs), declaring `UserDefaults` / `CA92.1`
 - [x] `ITSAppUsesNonExemptEncryption = false` — no export-compliance questionnaire
-- [x] `LSApplicationCategoryType` reaches the real `Info.plist` (it would be ignored via `INFOPLIST_KEY_` because `GENERATE_INFOPLIST_FILE = NO`)
-- [x] App icon present at 1024×1024 with dark and tinted variants, no alpha channel
+- [x] `LSApplicationCategoryType` reaches the real `Info.plist`
+- [x] App icon 1024×1024 with dark and tinted variants, no alpha channel
 - [x] Minimum OS 17.0, version 1.0.0 (1)
-- [x] iPhone-only (`UIDeviceFamily = [1]`) — no iPad screenshots required
-- [x] `NSPhotoLibraryAddUsageDescription` present — the share sheet's Save Image no longer kills the app
-- [x] `project.yml` and the project file agree, so `xcodegen generate` is safe
-- [x] Full test suite passes (93 tests)
+- [x] iPhone-only (`UIDeviceFamily = [1]`) — **but re-verify each upload, see §2**
+- [x] Not available on iPad, Mac (Catalyst or Designed-for-iPhone), Vision Pro or watchOS; embedded Google frameworks are iOS/arm64 only
+- [x] `NSUserTrackingUsageDescription` and `NSPhotoLibraryAddUsageDescription` present
+- [x] 50 SKAdNetwork IDs
+- [x] Full test suite passes (95 tests), and the core package still tests standalone on macOS
 - [x] `Starlane.storekit` is *not* bundled into the app
 - [x] Crate odds shown in-app match `GachaSystem.rollRarity` exactly
-- [x] Subscription price, period, renewal terms, Terms of Use and Privacy Policy links all shown next to the VIP row
+- [x] Subscription price, period, renewal terms, Terms of Use and Privacy Policy links shown next to the VIP row
 - [x] Restore Purchases present in both Shop and Settings
-- [x] Simulated ads labelled "Simulated ad"; generated rivals disclosed on the Ranks screen
-- [x] No tracking, no networking, no third-party SDKs
+- [x] Generated rivals disclosed on the Ranks screen
+- [x] AdMob behind UMP consent + ATT; interstitials gated by VIP, Remove Ads, an every-other-transition counter and a 75-second cooldown
 
-**Needs you**
+**Needs you — AdMob**
 
-- [ ] Enable GitHub Pages so `docs/` goes live, and confirm both URLs load ([WEBSITE.md](WEBSITE.md))
-- [ ] Replace the placeholder `you@example.com` in the two pages with a real inbox
+- [ ] Publish the GDPR consent message (without it, EEA/UK players see no ads at all)
+- [ ] Create the ATT explainer message
+- [ ] Cap ad content rating at G or PG
+- [ ] Mark the app as not directed at children
+- [ ] Complete address verification, tax and payment details
+- [ ] Redeploy the site so `/app-ads.txt` serves, then let AdMob verify it
+
+**Needs you — App Store Connect**
+
 - [ ] Activate the Paid Applications Agreement; complete banking and tax
 - [ ] Confirm the name "Starlane" is available
 - [ ] Register the explicit App ID `com.ravo.skybound`
 - [ ] Create the app record (§3)
 - [ ] Create the eight IAPs and attach them to build 1 (§8)
 - [ ] Capture and upload screenshots (§5)
-- [ ] Paste the metadata (§4)
-- [ ] Answer App Privacy as "Data Not Collected" (§6)
-- [ ] Complete the age-rating questionnaire (§7)
+- [ ] Paste the metadata (§4) — note the description now describes real ads
+- [ ] Fill in the App Privacy label from the table in §6 — **not** "Data Not Collected"
+- [ ] Complete the age-rating questionnaire (§7), answering **Yes** to third-party advertising
+- [ ] Settle the developer name: the pages say "RaVo Solutions", the contact address says *ravostudios*
 - [ ] Fill in App Review information and the reviewer notes (§9)
 - [ ] Upload a signed build and confirm it appears in TestFlight
-- [ ] Sandbox-test at least one consumable, the non-consumable restore and the subscription lapse
+- [ ] Sandbox-test a consumable, the non-consumable restore and the subscription lapse
+- [ ] Test a real ad on device: consent form, ATT prompt, one rewarded video, one interstitial
 - [ ] Submit for Review
 
 ---
@@ -518,8 +618,8 @@ refunded VIP removes the perk symmetrically.
 
 | Risk | Guideline | Mitigation |
 |---|---|---|
-| Privacy Policy URL dead (Pages not enabled) | 5.1.1 | Blocker #1 |
-| Shop empty during review (products not attached, or agreement inactive) | 2.1 | Blockers #2, #3 |
+| Privacy Policy URL dead (site not deployed) | 5.1.1 | Blocker #1 |
+| Shop empty during review (products not attached, or agreement inactive) | 2.1 | §2, App Store Connect items |
 | Loot box odds not disclosed | 3.1.1 | Already handled — the odds table is on the crate screen |
 | Subscription terms not visible | 3.1.2 | Already handled in-app and in the description |
 | Missing Restore Purchases | 3.1.1 | Already handled |
@@ -528,14 +628,25 @@ refunded VIP removes the perk symmetrically.
 | App crash on Save Image | 2.1 | Fixed — Photos usage description added |
 | Poor experience on iPad | 2.4.1 / 4.0 | Fixed — shipping iPhone-only |
 | App icon alpha channel | ITMS-90717 | Fixed — icon regenerated without alpha |
+| App Privacy label says "Data Not Collected" while AdMob is linked | 5.1.1 | Fixed in this document — use the §6 table |
+| ATT prompt shown without the usage string, or IDFA used before consent | 5.1.2 | `NSUserTrackingUsageDescription` present; UMP runs before ATT |
+| Ads served above the app's age rating | 1.1.4 | `maxAdContentRating = .parentalGuidance` per request — still set the account-level cap |
+| EEA/UK reviewers see no ads because the consent message is unpublished | 2.1 | AdMob checklist above |
+| iPad regression slips through on a later upload | 2.4.1 | Re-verify `UIDeviceFamily` before each upload (§2) |
 
 ---
 
 ## Related documents
 
-- [IAP.md](IAP.md) — deeper detail on the purchase implementation and StoreKit behaviour. Note its
-  "Outstanding" list is partly stale: the signing team *is* set in the project file, and its
-  screenshot sizes are out of date.
+- [ADMOB.md](ADMOB.md) — the AdMob account setup, what the ad code does, and `app-ads.txt`.
+- [IAP.md](IAP.md) — the purchase implementation and StoreKit behaviour. Its screenshot sizes are out
+  of date; this document is the authority there.
+- [WEBSITE.md](WEBSITE.md) — deploying and editing the Privacy, Support and Marketing pages.
 - [ARCHITECTURE.md](ARCHITECTURE.md) — how the app is put together.
-- [WEBSITE.md](WEBSITE.md) — how to publish and edit the Privacy and Support pages.
 - [README.md](README.md) — building and running.
+
+---
+
+*Facts in this document marked "verified" were read out of a clean Release archive built on
+17 Sep 2026, not inferred from source. Where a claim could not be verified — signing, and an
+`xcodegen` regeneration — that is stated at the point it matters.*

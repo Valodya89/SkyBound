@@ -100,14 +100,15 @@ screen ("Supply" tab) shows all eight products, so one screenshot of it works fo
 - **Export compliance**: `ITSAppUsesNonExemptEncryption = false`.
 - **App icon**: 1024×1024, plus dark and tinted variants; no alpha channel.
 - **Release archive** succeeds clean; `MinimumOSVersion` 17.0, version 1.0.0 (1), iPhone-only.
-- **Mock ads** are labelled "Simulated ad" and the install button states nothing installs.
+- **Ads** come from Google AdMob, behind the UMP consent form and the ATT prompt. Remove Ads and VIP
+  both disable interstitials; rewarded videos stay opt-in. See [ADMOB.md](ADMOB.md).
 
 ### Outstanding — these need you, not code
 
 1. ~~**Signing team.**~~ Fixed: `DEVELOPMENT_TEAM` is `X3VVWK6698` in both `project.yml` and the
    project file, so regenerating with xcodegen no longer wipes it.
 2. **Privacy Policy URL must resolve.** `LegalLinks.privacy` in `ShopScreen.swift` now points at
-   `https://valodya89.github.io/SkyBound/privacy/`. The page is written (`docs/privacy/`) but is not
+   `https://ravo-starlane.netlify.app/privacy/`. The page is written (`docs/privacy/`) but is not
    live until GitHub Pages is enabled — see `WEBSITE.md`. The same URL goes in App Store Connect ▸
    App Privacy. A dead link here is a routine rejection.
 3. **Paid Applications Agreement** must be active with banking and tax details complete, or no product
