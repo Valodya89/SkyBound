@@ -98,17 +98,18 @@ screen ("Supply" tab) shows all eight products, so one screenshot of it works fo
   Policy links all sit next to the VIP row.
 - **Restore Purchases** exists in both Shop and Settings — required for the non-consumables.
 - **Export compliance**: `ITSAppUsesNonExemptEncryption = false`.
-- **App icon**: 1024×1024 universal, plus dark and tinted variants.
-- **Release archive** succeeds; `MinimumOSVersion` 17.0, version 1.0.0 (1).
+- **App icon**: 1024×1024, plus dark and tinted variants; no alpha channel.
+- **Release archive** succeeds clean; `MinimumOSVersion` 17.0, version 1.0.0 (1), iPhone-only.
 - **Mock ads** are labelled "Simulated ad" and the install button states nothing installs.
 
 ### Outstanding — these need you, not code
 
-1. **Signing team.** `DEVELOPMENT_TEAM` is empty in `project.yml` and the project file. Set your Apple
-   Developer Team ID; archiving for upload fails without it.
-2. **Privacy Policy URL must resolve.** `LegalLinks.privacy` in `ShopScreen.swift` points at
-   `https://ravosolutions.com/starlane/privacy`, which does not exist yet. The same URL goes in App Store
-   Connect ▸ App Privacy. A dead link here is a routine rejection.
+1. ~~**Signing team.**~~ Fixed: `DEVELOPMENT_TEAM` is `X3VVWK6698` in both `project.yml` and the
+   project file, so regenerating with xcodegen no longer wipes it.
+2. **Privacy Policy URL must resolve.** `LegalLinks.privacy` in `ShopScreen.swift` now points at
+   `https://valodya89.github.io/SkyBound/privacy/`. The page is written (`docs/privacy/`) but is not
+   live until GitHub Pages is enabled — see `WEBSITE.md`. The same URL goes in App Store Connect ▸
+   App Privacy. A dead link here is a routine rejection.
 3. **Paid Applications Agreement** must be active with banking and tax details complete, or no product
    loads — not even in TestFlight.
 4. **Create the eight products** in App Store Connect using the tables above, and attach them to the
